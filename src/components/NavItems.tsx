@@ -13,16 +13,16 @@ function Search() {
 
 function NavItems() {
   return (
-    <div className="flex flex-grow lg:gap-4 justify-end">
-      <nav className="md:flex hidden gap-4 items-center">
+    <div className="flex grow justify-end lg:gap-4">
+      <nav className="hidden items-center gap-4 md:flex">
         <Search />
         <Link href="/login">
-          <button className="btn rounded-lg border-2 border-primary-foreground text-primary-foreground py-1 px-2 font-extrabold">
+          <button className="rounded-lg border-2 border-primary-foreground px-2 py-1 font-extrabold text-primary-foreground active:bg-secondary">
             LOGIN
           </button>
         </Link>
         <Link href="/register">
-          <button className="btn rounded-lg border-2 border-primary-foreground bg-primary-foreground py-1 px-2 font-extrabold text-white dark:text-black">
+          <button className="rounded-lg border-2 border-primary-foreground bg-primary-foreground px-2 py-1 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
             CREATE ACCOUNT
           </button>
         </Link>
@@ -30,10 +30,10 @@ function NavItems() {
           <ThemeSwitch />
         </div>
       </nav>
-      <button className="btn flex items-center md:hidden rounded">
+      <button className="flex items-center rounded active:bg-secondary md:hidden">
         <Icon
           icon="mingcute:menu-fill"
-          className="text-3xl rounded py-1 px-2 box-content"
+          className="box-content rounded px-2 py-1 text-3xl"
         />
       </button>
     </div>
