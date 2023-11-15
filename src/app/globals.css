@@ -13,10 +13,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
 
-    --primary: 14, 100%, 81%;
+    --primary: 14, 66%, 80%;
     --primary-foreground: 14, 96%, 19%;
 
-    --secondary: 12, 52%, 80%;
+    --secondary: 14, 33%, 80%;
     --secondary-foreground: 14, 33%, 20%;
 
     --muted: 0 0% 96.1%;
@@ -46,10 +46,10 @@
     --popover-foreground: 0 0% 98%;
 
     --primary: 14, 96%, 19%;
-    --primary-foreground: 14, 100%, 81%;
+    --primary-foreground: 14, 100%, 80%;
 
     --secondary: 14, 33%, 19%;
-    --secondary-foreground: 14, 33%, 81%;
+    --secondary-foreground: 14, 33%, 80%;
 
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
@@ -79,10 +79,7 @@ body {
   @apply overflow-x-hidden;
 }
 a {
-  @apply hover:brightness-150;
-}
-.btn {
-  @apply active:bg-secondary;
+  @apply dark:hover:brightness-125 hover:brightness-150;
 }
 
 /* gradient background */
@@ -101,6 +98,31 @@ a {
     rgb(44, 36, 34) 50%,
     rgb(52, 30, 0) 100%
   );
+}
+
+/* radial background */
+.radial-background {
+  background: radial-gradient(circle, rgb(228, 165, 147) 0%, rgb(219, 114, 81) 50%);
+}
+
+.dark .radial-background {
+  background: radial-gradient(circle, rgb(85, 76, 71) 0%, rgb(39, 20, 14) 50%);
+}
+
+/* glass form */
+.glass-form {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.dark .glass-form {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 /* Laptop.tsx */
