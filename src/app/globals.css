@@ -86,9 +86,9 @@ a {
 .gradient-background {
   background: linear-gradient(
     45deg,
-    rgba(255, 136, 110, 1) 0%,
-    rgba(231, 188, 177, 1) 50%,
-    rgba(255, 197, 116, 1) 100%
+    rgb(255, 136, 110) 0%,
+    rgb(231, 188, 177) 50%,
+    rgb(255, 197, 116) 100%
   );
 }
 .dark .gradient-background {
@@ -102,7 +102,7 @@ a {
 
 /* radial background */
 .radial-background {
-  background: radial-gradient(circle, rgb(228, 165, 147) 0%, rgb(219, 114, 81) 50%);
+  background: radial-gradient(circle, rgb(255, 209, 197) 0%, rgb(196, 103, 82) 50%);
 }
 
 .dark .radial-background {

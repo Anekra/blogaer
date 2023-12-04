@@ -5,7 +5,7 @@ import Logo from './Logo';
 import NavItems from './NavItems';
 import Link from 'next/link';
 
-export const Navbar = () => {
+export default function Navbar() {
   const [isScrollingDown, setIsScrollingDown] = useState<boolean | null>(null);
   const [prevY, setPrevY] = useState(0);
 

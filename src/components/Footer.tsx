@@ -2,7 +2,7 @@ import React from 'react';
 import GooglePlayIcon from './GooglePlayIcon';
 import Link from 'next/link';
 
-function Footer() {
+export default function Footer() {
   return (
     <footer className="bottom-0 flex w-screen items-center justify-between gap-2 px-2 py-4 shadow-[0_-0.5px_2px_#334041] dark:shadow-[0_-0.5px_2px_#ffffff] sm:px-12">
       <div className="flex">
@@ -28,5 +28,3 @@ function Footer() {
     </footer>
   );
 }
-
-export default Footer;

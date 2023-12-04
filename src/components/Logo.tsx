@@ -1,11 +1,14 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-function Logo({ w, h, text }: { w: string; h: string, text: string }) {
+function Logo({
+  className = 'w-[80px] h-[50px] text-primary-foreground'
+}: { className?: string | undefined }) {
   return (
     <svg
       viewBox="0 0 182 110"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${w} ${h} ${text} fill-current text-primary`}
+      className={cn('fill-current', className)}
     >
       <path d="M162.421 56.5372L182 110H167.167L148.775 59.5407H91.5L74.5 49C134.423 49 157.081 47.5266 157.081 30.7068C157.081 13.2863 146.995 13.2155 87.0718 13.2155L58 0C101.311 1.20141 142.249 -3.00353 160.641 6.00706C172.807 11.9671 179.034 37.9153 162.421 56.5372Z" />
       <path d="M87.4545 69.5355L92.1818 80.7466H128.64L124.506 69.5355H87.4545Z" />
@@ -19,7 +22,5 @@ function Logo({ w, h, text }: { w: string; h: string, text: string }) {
     </svg>
   );
 }
-
-Logo.defaultProps = {w: 'w-[80px]', h: 'h-[50px]', text: 'text-primary-foreground'}
 
 export default Logo;
