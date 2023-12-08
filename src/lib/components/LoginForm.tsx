@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import * as z from 'zod';
 import { Icon } from '@iconify/react';
@@ -13,15 +13,14 @@ import {
 } from './ui/form';
 import { Input } from './ui/input';
 import FormIndicator from './FormIndicator';
-import { constants } from '@/lib/constats';
-import register from '@/lib/actions/register';
-import { RegisterFormSchema } from '@/lib/zodSchemas';
+import { constants } from '@/lib/constants';
+import login from '@/lib/actions/login';
+import { LoginFormSchema } from '@/lib/zodSchemas';
 
-export default function RegisterForm() {
-  const form = useForm<z.infer<typeof RegisterFormSchema>>({
-    resolver: zodResolver(RegisterFormSchema),
+export default function LoginForm() {
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
-      username: '',
       email: '',
       password: ''
     },
@@ -32,38 +31,10 @@ export default function RegisterForm() {
     <div className="z-[1] flex flex-col gap-6">
       <FormProvider {...form}>
         <form
-          onSubmit={form.handleSubmit((values) => register(values))}
+          onSubmit={form.handleSubmit((values) => login(values))}
           className="flex flex-col gap-2"
           noValidate
         >
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field, fieldState }) => (
-              <FormItem className="flex flex-col gap-1">
-                <div className="flex items-center">
-                  <FormLabel className="grow">Username</FormLabel>
-                  <FormIndicator
-                    fieldError={fieldState.error}
-                    value={field.value}
-                  />
-                </div>
-                <FormControl>
-                  <Input
-                    placeholder="Enter new username"
-                    type="text"
-                    className={`${
-                      fieldState.error
-                        ? 'border border-red-500 focus:border-none focus-visible:ring-red-500'
-                        : 'focus-visible:ring-ring'
-                    }`}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage>{fieldState.error?.message}</FormMessage>
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="email"
@@ -142,7 +113,7 @@ export default function RegisterForm() {
             type="submit"
             className="mt-6 w-full rounded-md bg-primary-foreground py-2 font-bold text-primary hover:shadow-[0_2px_4px_0_rgb(0,0,0,0.9)] active:translate-y-[4px] active:shadow-none dark:hover:shadow-[0_2px_4px_0_rgb(255,255,255,0.9)] dark:hover:active:shadow-none"
           >
-            Create Account
+            Login
           </button>
         </form>
       </FormProvider>
@@ -150,7 +121,7 @@ export default function RegisterForm() {
         <div className="mt-2 flex items-center">
           <hr className="h-1 w-full border-none bg-gradient-to-l from-foreground" />
           <p className="w-fit shrink-0 px-2 text-center text-sm">
-            Or sign up with
+            Or login with
           </p>
           <hr className="h-1 w-full border-none bg-gradient-to-r from-foreground" />
         </div>
@@ -166,8 +137,11 @@ export default function RegisterForm() {
         </div>
         <div className="px-4">
           <p className="text-center">
-            Already have an account?
-            <span className="text-primary-foreground hover:cursor-pointer"> Login</span>
+            Need an account?
+            <span className="text-primary-foreground hover:cursor-pointer">
+              {' '}
+              Register
+            </span>
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { constants } from '@/lib/constats';
+import { constants } from '@/lib/constants';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import React from 'react';
 import { FieldError } from 'react-hook-form';

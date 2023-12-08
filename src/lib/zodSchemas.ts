@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { constants } from "./constats";
+import { constants } from "./constants";
 
 export const RegisterFormSchema = z.object({
   username: z.string().min(2, {

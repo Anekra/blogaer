@@ -1,6 +1,6 @@
-import CategoriesIcon from '@/components/CategoriesIcon';
-import Laptop from '@/components/Laptop';
-import StoriesIcon from '@/components/StoriesIcon';
+import CategoriesIcon from '@/lib/components/CategoriesIcon';
+import Laptop from '@/lib/components/Laptop';
+import StoriesIcon from '@/lib/components/StoriesIcon';
 import Link from 'next/link';
 
 export default function Home() {

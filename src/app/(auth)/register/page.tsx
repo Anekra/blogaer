@@ -1,6 +1,6 @@
-import BackBtn from '@/components/BackBtn';
-import RegisterForm from '../../../components/RegisterForm';
-import Logo from '@/components/Logo';
+import BackBtn from '@/lib/components/BackBtn';
+import RegisterForm from '@/lib/components/RegisterForm';
+import Logo from '@/lib/components/Logo';
 
 export default function Register() {
   return (

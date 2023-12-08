@@ -4,6 +4,7 @@ export type UserResponse = {
   data: {
     username: string,
     email: string,
+    role: string,
     token: string
   }
 }

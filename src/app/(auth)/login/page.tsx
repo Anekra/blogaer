@@ -1,6 +1,6 @@
-import BackBtn from "@/components/BackBtn";
-import LoginForm from "@/components/LoginForm";
-import Logo from "@/components/Logo";
+import BackBtn from "@/lib/components/BackBtn";
+import LoginForm from "@/lib/components/LoginForm";
+import Logo from "@/lib/components/Logo";
 
 export default function Login() {
   return (
