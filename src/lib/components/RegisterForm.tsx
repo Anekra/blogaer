@@ -46,6 +46,7 @@ export default function RegisterForm() {
                   <FormIndicator
                     fieldError={fieldState.error}
                     value={field.value}
+                    formType="register"
                   />
                 </div>
                 <FormControl>
@@ -74,6 +75,7 @@ export default function RegisterForm() {
                   <FormIndicator
                     fieldError={fieldState.error}
                     value={field.value}
+                    formType="register"
                   />
                 </div>
                 <FormControl>
@@ -102,6 +104,7 @@ export default function RegisterForm() {
                   <FormIndicator
                     fieldError={fieldState.error}
                     value={field.value}
+                    formType="register"
                   />
                 </div>
                 <FormControl>

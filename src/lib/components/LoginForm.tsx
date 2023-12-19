@@ -23,8 +23,7 @@ export default function LoginForm() {
     defaultValues: {
       email: '',
       password: ''
-    },
-    mode: 'onChange'
+    }
   });
 
   return (
@@ -45,6 +44,7 @@ export default function LoginForm() {
                   <FormIndicator
                     fieldError={fieldState.error}
                     value={field.value}
+                    formType="login"
                   />
                 </div>
                 <FormControl>
@@ -73,6 +73,7 @@ export default function LoginForm() {
                   <FormIndicator
                     fieldError={fieldState.error}
                     value={field.value}
+                    formType="login"
                   />
                 </div>
                 <FormControl>

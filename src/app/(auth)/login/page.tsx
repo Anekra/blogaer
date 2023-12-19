@@ -2,7 +2,7 @@ import BackBtn from "@/lib/components/BackBtn";
 import LoginForm from "@/lib/components/LoginForm";
 import Logo from "@/lib/components/Logo";
 
-export default function Login() {
+export default async function Login() {
   return (
     <main className="radial-background relative flex min-h-screen items-center justify-center py-6">
       <BackBtn className="md:text-5xl" />

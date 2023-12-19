@@ -5,10 +5,12 @@ import { FieldError } from 'react-hook-form';
 
 export default function FormIndicator({
   fieldError,
-  value
+  value,
+  formType,
 }: {
   fieldError: FieldError | undefined;
   value: string;
+  formType: string;
 }) {
   if (fieldError?.message) {
     return (
@@ -21,7 +23,7 @@ export default function FormIndicator({
         } w-5 text-center text-lg text-red-500`}
       />
     );
-  } else if (!fieldError && value) {
+  } else if (!fieldError && value && formType === 'register') {
     return (
       <Icon
         icon="mingcute:check-fill"

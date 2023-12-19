@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import NavItems from './NavItems';
 import Link from 'next/link';
+import { User } from '../types';
 
-export default function Navbar() {
+export default function Navbar({ user }: { user: User }) {
   const [isScrollingDown, setIsScrollingDown] = useState<boolean | null>(null);
   const [prevY, setPrevY] = useState(0);
 
@@ -31,7 +32,7 @@ export default function Navbar() {
       <Link href="/">
         <Logo />
       </Link>
-      <NavItems />
+      <NavItems user={user} />
     </header>
   );
-};
+}
