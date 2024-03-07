@@ -5,7 +5,6 @@ import { auth } from '@/lib/auth';
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const session = await auth()
-  // console.log('ses', session?.expires);
   
   return (
     <main className="w-screen">
