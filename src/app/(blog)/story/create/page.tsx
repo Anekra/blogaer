@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateStoryForm from '@/lib/components/CreateStoryForm';
 
-export default function CreateStory() {
+export default async function CreateStory() {
   return (
     <div>
       <CreateStoryForm />
