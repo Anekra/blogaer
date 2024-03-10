@@ -1,12 +1,12 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
-  signOut,
-  update
+  signOut
 } = NextAuth({
   providers: [
     Credentials({
@@ -15,17 +15,31 @@ export const {
 
         const response = await fetch(data.url, {
           method: 'POST',
-          headers: { 'content-type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Origin: 'http://localhost:3000',
+            Cookie: cookies().get('jwt')?.value || ''
+          },
           body: data.values
         });
 
-        if (!response.ok) return null;
+        if (response.ok || response.status === 201) {
+          const user = await response.json();
 
-        console.log(response.status);
+          const token = user.data.refresh;
+          if (token) {
+            cookies().set('jwt', token, {
+              httpOnly: true,
+              secure: true,
+              sameSite: 'none',
+              maxAge: 24 * 60 * 60
+            });
+          }
+          console.log('auth.ts 38: ', token);
 
-        const user = await response.json();
-        
-        return user;
+          return user;
+        }
+        return null;
       }
     })
   ],
@@ -40,11 +54,15 @@ export const {
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       session.user.username = token.username;
-      session.user.email = token.email;
+      session.user.mail = token.email;
       session.user.role = token.role;
-      session.expires = new Date(new Date().getTime() + 15 * 60000).toISOString();
+      session.user.token = token.access;
+      session.user.status = user.status;
+      session.user.expired = new Date(
+        new Date().getTime() + 15 * 60000
+      ).toISOString();
 
       return session;
     }
