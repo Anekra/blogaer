@@ -5,8 +5,11 @@ declare module '@auth/core/types' {
   interface Session {
     user: {
       username: string;
-      email: string | null | undefined;
+      mail: string | null | undefined;
       role: string;
+      token: string;
+      expired: string;
+      status: string;
     };
   }
   interface User extends UserResponse {}
