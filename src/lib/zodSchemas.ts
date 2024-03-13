@@ -13,9 +13,6 @@ export const RegisterFormSchema = z.object({
     .min(4, {
       message: constants.PASS_MINIMUM
     })
-    .min(8, {
-      message: constants.PASS_WEAK
-    })
 });
 
 export const LoginFormSchema = z.object({
