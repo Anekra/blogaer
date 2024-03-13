@@ -1,26 +1,22 @@
-'use server';
+'use server'
 
 import { signOut } from '@/lib/auth';
-import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 export default async function logout() {
-  signOut({ redirect: false });
   const url: string = `${process.env.API_ROUTE}/logout`;
 
-  const logoutResponse = await fetch(url, { credentials: 'include' });
+  const logoutResponse = await fetch(url, {
+    headers: {
+      Origin: 'http://localhost:3000',
+      Cookie: `jwt=${cookies().get('jwt')?.value}` 
+    }
+  });
+
   console.log(logoutResponse.status);
 
   if (!logoutResponse.ok) throw new Error(logoutResponse.statusText);
 
-  logoutResponse
-    .json()
-    .then(async () => {
-      const logout = await signOut({ redirect: false });
-      console.log('logout1: ', logout);
-    })
-    .catch((err: Error) => {
-      console.error('logout2: ', err.message);
-    });
-    
-  return redirect('/');
+  cookies().delete('jwt')
+  return await signOut({ redirect: true, redirectTo: '/' });
 }
