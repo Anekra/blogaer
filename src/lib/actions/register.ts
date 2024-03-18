@@ -1,22 +1,19 @@
 'use server';
 
-import { signIn } from '@/lib/auth';
+import { auth, signIn } from '@/lib/auth';
 import { RegisterFormSchema } from '@/lib/zodSchemas';
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 export default async function register(
   values: z.infer<typeof RegisterFormSchema>
 ): Promise<any> {
   const url: string = `${process.env.API_ROUTE}/register`;
+  const currentUser = await auth()
 
-  const register = signIn('credentials', {
-    redirect: false,
+  return await signIn('credentials', {
+    redirect: true,
+    redirectTo: `/${currentUser?.user.username}`,
     values: JSON.stringify(values),
     url
   });
-
-  console.log(register);
-
-  return redirect('/');
 }
