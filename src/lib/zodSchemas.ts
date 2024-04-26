@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { constants } from "./constants";
+import { z } from 'zod';
+import { PASS_CHECK } from './constants';
 
 export const RegisterFormSchema = z.object({
   username: z.string().min(2, {
@@ -8,11 +8,9 @@ export const RegisterFormSchema = z.object({
   email: z.string().email({
     message: 'Not a valid email.'
   }),
-  password: z
-    .string()
-    .min(4, {
-      message: constants.PASS_MINIMUM
-    })
+  password: z.string().min(4, {
+    message: PASS_CHECK.PASS_MINIMUM
+  })
 });
 
 export const LoginFormSchema = z.object({

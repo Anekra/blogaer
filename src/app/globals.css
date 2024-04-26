@@ -82,6 +82,13 @@ a {
   @apply dark:hover:brightness-125 hover:brightness-150;
 }
 
+/* placeholder */
+.ph::after {
+  content: 'Type something...';
+  position: absolute;
+  color: hsl(var(--foreground) / 0.5);
+}
+
 /* gradient background */
 .gradient-background {
   background: linear-gradient(

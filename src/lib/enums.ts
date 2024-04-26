@@ -2,47 +2,33 @@ export enum WysiwygType {
   Paragraph = 'paragraph',
   Heading = 'heading',
   Code = 'code',
-  Image = 'image',
   Quote = 'quote',
-  Divider = 'divider',
+  List = 'list',
   ListBullets = 'bullets',
-  ListNumbers = 'numbers'
+  ListNumbers = 'numbers',
+  Image = 'image',
+  Divider = 'divider'
 }
 
 export enum WysiwygAlign {
   Left = 'text-left',
   Center = 'text-center',
   Right = 'text-right',
-  Justify = 'text-justify',
-  ImgLeft = 'justify-start',
-  ImgCenter = 'justify-center',
-  ImgRight = 'justify-end'
+  Justify = 'text-justify'
 }
 
 export enum WysiwygStyle {
   Bold = 'bold',
   Italic = 'italic',
   Underline = 'underline',
-  Strike = 'del',
+  Strike = 'strikethrough',
   Link = 'link'
 }
 
-export enum WysiwygTypeIcon {
-  Paragraph = 'P',
-  Heading = 'H',
-  Code = '<>',
-  Image = '🖼',
-  Quote = '❛❛',
-  Divider = '⎯',
-  ListBullets = 'bullets',
-  ListNumbers = 'numbers'
-}
-
-export enum WysiwygStyleIcon {
-  Bold = 'strong',
-  Italic = 'em',
-  Underline = 'u',
-  Strike = 'del'
+export enum HeadingSize {
+  H3 = 'text-2xl',
+  H2 = 'text-3xl',
+  H1 = 'text-5xl'
 }
 
 export enum HotKeys {
@@ -50,10 +36,4 @@ export enum HotKeys {
   'mod+i' = 'italic',
   'mod+u' = 'underline',
   'mod+delete' = 'del'
-}
-
-export enum HeadingSize {
-  Medium = 'text-2xl',
-  Large = 'text-3xl',
-  ExtraLarge = 'text-5xl'
 }

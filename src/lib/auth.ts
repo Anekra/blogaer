@@ -35,7 +35,6 @@ export const {
               maxAge: 24 * 60 * 60
             });
           }
-          console.log('auth.ts 38: ', token);
 
           return user;
         }

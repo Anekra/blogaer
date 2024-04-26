@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils';
 import React from 'react';
+import { cn } from '../utils/shadcn';
 
 function Logo({
   className = 'w-[80px] h-[50px] text-primary-foreground'

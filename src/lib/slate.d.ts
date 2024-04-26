@@ -5,12 +5,11 @@ import { ReactEditor } from 'slate-react';
 import { WysiwygType } from './enums';
 import { langs } from '@uiw/codemirror-extensions-langs';
 
-type CustomText = { text: string; [key: string]: any };
+type CustomText = { text: string; [key?: string]: any };
 type CustomElement = {
   type: string;
   children: CustomText[];
   align?: string;
-  url?: string;
   [key?: string]: any;
 };
 

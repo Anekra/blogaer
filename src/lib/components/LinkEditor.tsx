@@ -10,7 +10,7 @@ import { WysiwygStyle } from '../enums';
 import { CustomElement } from '../slate';
 import { useSlate } from 'slate-react';
 import isUrl from 'is-url';
-import { wrapLink } from '../utils/editor';
+import { wrapLink } from '../utils/helper';
 
 export default function LinkEditor({
   visible,

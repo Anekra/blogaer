@@ -3,9 +3,13 @@ import ReactCodeMirror from '@uiw/react-codemirror';
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { useSlate } from 'slate-react';
 import { CustomElement } from '../slate';
-import { removeBlock, setCodeBlock } from '../utils/editor';
+import { removeElement, setCodeElement } from '../utils/helper';
 
-export default function CodeEditor({ element }: { element: CustomElement }) {
+export default function CodeEditor({
+  element,
+}: {
+  element: CustomElement;
+}) {
   const editor = useSlate();
 
   return (
@@ -21,7 +25,7 @@ export default function CodeEditor({ element }: { element: CustomElement }) {
         allowMultipleSelections: false,
         indentOnInput: false
       }}
-      onChange={(val) => setCodeBlock(editor, element, val)}
+      onChange={(val) => setCodeElement(editor, val)}
       onFocus={() => editor.select(element.location)}
       onKeyDown={(e) => {
         if (
@@ -29,7 +33,7 @@ export default function CodeEditor({ element }: { element: CustomElement }) {
           e.key.match('Backspace') &&
           editor.children.length > 1
         ) {
-          removeBlock(editor);
+          removeElement(editor);
         }
       }}
       autoFocus

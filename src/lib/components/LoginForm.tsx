@@ -13,7 +13,7 @@ import {
 } from './ui/form';
 import { Input } from './ui/input';
 import FormIndicator from './FormIndicator';
-import { constants } from '@/lib/constants';
+import { PASS_CHECK } from '@/lib/constants';
 import login from '@/lib/actions/login';
 import { LoginFormSchema } from '@/lib/zodSchemas';
 
@@ -86,12 +86,12 @@ export default function LoginForm() {
                         : 'focus-visible:ring-ring'
                     } 
                     ${
-                      fieldState.error?.message === constants.PASS_MINIMUM
+                      fieldState.error?.message === PASS_CHECK.PASS_MINIMUM
                         ? 'border-red-500 focus-visible:ring-red-500'
                         : ''
                     }
                     ${
-                      fieldState.error?.message === constants.PASS_WEAK
+                      fieldState.error?.message === PASS_CHECK.PASS_WEAK
                         ? 'border-yellow-500 focus-visible:ring-yellow-500'
                         : ''
                     }`}
@@ -100,7 +100,7 @@ export default function LoginForm() {
                 </FormControl>
                 <FormMessage
                   className={`${
-                    fieldState.error?.message === constants.PASS_WEAK
+                    fieldState.error?.message === PASS_CHECK.PASS_WEAK
                       ? 'text-yellow-500'
                       : ''
                   }`}
