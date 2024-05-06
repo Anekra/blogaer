@@ -5,14 +5,26 @@ export const PASS_CHECK = {
   PASS_WEAK: 'Your password is too weak.'
 };
 
-export const CUSTOM_PLACEHOLDER = [
-  WysiwygType.Quote,
+export const LIST_TYPES: string[] = [
+  WysiwygType.ListBullets,
+  WysiwygType.ListNumbers
+]
+
+export const POSITION_TYPES: string[] = [
   WysiwygType.Code,
   WysiwygType.Image,
   WysiwygType.Divider
 ];
 
-export const LIST_TYPES: string[] = [
-  WysiwygType.ListBullets,
-  WysiwygType.ListNumbers
-]
+export const NOT_STYLABLE: string[] = [
+  WysiwygType.Heading,
+  WysiwygType.Code,
+  WysiwygType.Image,
+  WysiwygType.Divider
+];
+
+export const NOT_ALIGNABLE: string[] = [
+  WysiwygType.Code,
+  WysiwygType.Image,
+  WysiwygType.Divider
+];

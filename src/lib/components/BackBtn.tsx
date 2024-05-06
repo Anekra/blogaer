@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/shadcn';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useRouter } from 'next/navigation';
 import React from 'react';

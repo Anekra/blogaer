@@ -26,7 +26,9 @@ export default function CodeEditor({
         indentOnInput: false
       }}
       onChange={(val) => setCodeElement(editor, val)}
-      onFocus={() => editor.select(element.location)}
+      onFocus={() => {
+        if ('element' in element) editor.select(element.position)
+      }}
       onKeyDown={(e) => {
         if (
           !element.code &&

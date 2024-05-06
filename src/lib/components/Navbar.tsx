@@ -26,7 +26,7 @@ export default function Navbar({ user }: { user: User }) {
       className={`
         ${isScrollingDown ? '-translate-y-full' : 'translate-y-0'}
         ${prevY > 400 ? 'bg-background' : 'gradient-background'}
-        fixed top-0 z-10 flex w-screen items-center justify-between gap-4  px-3 py-2 shadow-sm shadow-black/30 transition-transform duration-500 dark:shadow-white/30 sm:px-12
+        fixed top-0 z-[2] flex w-screen items-center justify-between gap-4  px-3 py-2 shadow-sm shadow-black/30 transition-transform duration-500 dark:shadow-white/30 sm:px-12
       `}
     >
       <Link href="/">

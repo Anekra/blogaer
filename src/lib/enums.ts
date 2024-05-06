@@ -35,5 +35,5 @@ export enum HotKeys {
   'mod+b' = 'bold',
   'mod+i' = 'italic',
   'mod+u' = 'underline',
-  'mod+delete' = 'del'
+  'mod+delete' = 'strikethrough'
 }

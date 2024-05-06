@@ -1,10 +1,12 @@
-import Link from 'next/link';
 import { SlateEditor } from '../types';
 import { RenderElementProps, RenderLeafProps } from 'slate-react';
-import Image from 'next/image';
 import { WysiwygStyle, WysiwygType } from '../enums';
 import CodeEditor from '../components/CodeEditor';
 import React from 'react';
+import Divider from '../components/Divider';
+import BlogImage from '../components/BlogImage';
+import Quote from '../components/Quote';
+import BlogLink from '../components/BlogLink';
 
 export default function useEditorConfig(editor: SlateEditor) {
   const { isVoid } = editor;
@@ -24,7 +26,12 @@ function renderElement(props: RenderElementProps) {
   switch (element.type) {
     case WysiwygType.Heading:
       return (
-        <h1 {...attributes} className={`${element.headingSize} font-bold`}>
+        <h1
+          {...attributes}
+          className={`${element.headingSize} ${!text ? 'ph relative' : ''} ${
+            element.align
+          } font-bold`}
+        >
           {children}
         </h1>
       );
@@ -36,63 +43,42 @@ function renderElement(props: RenderElementProps) {
         </code>
       );
     case WysiwygType.Quote:
-      return (
-        <blockquote
-          {...attributes}
-          className="flex rounded-md bg-foreground/10 p-3 font-serif"
-        >
-          <span
-            className="h-[50px] rotate-180 select-none self-start text-8xl font-bold leading-[0]"
-            contentEditable={false}
-          >
-            &bdquo;
-          </span>
-          <span
-            className={`${
-              !text ? 'ph relative flex' : ''
-            } w-full px-4 text-xl outline-none`}
-          >
-            {children}
-          </span>
-          <span
-            className="h-[50px] select-none self-end text-8xl font-bold leading-[0]"
-            contentEditable={false}
-          >
-            &bdquo;
-          </span>
-        </blockquote>
-      );
+      return <Quote props={props} text={text} />;
     case WysiwygType.List:
-      return <li {...attributes}>{children}</li>;
+      return (
+        <li {...attributes} className={`${!text ? 'ph relative' : ''}`}>
+          {children}
+        </li>
+      );
     case WysiwygType.ListBullets:
       return (
-        <ul {...attributes} className="list-disc">
+        <ul {...attributes} className="list-disc px-[18px]">
           {children}
         </ul>
       );
     case WysiwygType.ListNumbers:
       return (
-        <ol {...attributes} className="list-decimal">
+        <ol {...attributes} className="list-decimal px-[18px]">
           {children}
         </ol>
       );
+    case WysiwygType.Image:
+      return <BlogImage element={element}>{children}</BlogImage>;
     case WysiwygType.Divider:
-      return (
-        <div {...attributes} className="py-8" contentEditable={false}>
-          <hr className="" />
-          <span className="hidden">{children}</span>
-        </div>
-      );
+      return <Divider element={element}>{children}</Divider>;
     case WysiwygStyle.Link:
       return (
-        <Link {...props} href={element.url || ''}>
-          {children}
-        </Link>
+        <BlogLink props={props} />
       );
-    case WysiwygType.Image:
-      return <Image {...props} src="" alt="Blog" />;
     default:
-      return <p {...attributes}>{children}</p>;
+      return (
+        <p
+          {...attributes}
+          className={`${!text ? 'ph relative' : ''} ${element.align}`}
+        >
+          {children}
+        </p>
+      );
   }
 }
 
@@ -107,6 +93,10 @@ function renderLeaf({ children, leaf, attributes }: RenderLeafProps) {
 
   if (leaf.underline) {
     children = <u>{children}</u>;
+  }
+
+  if (leaf.strikethrough) {
+    children = <s>{children}</s>;
   }
 
   return <span {...attributes}>{children}</span>;

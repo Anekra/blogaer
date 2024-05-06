@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React, { useState } from 'react';
-import { BaseSelection } from 'slate';
+import React, { useRef, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,39 +9,41 @@ import {
 } from './ui/dropdown-menu';
 import {
   getElement,
+  getElementAlignment,
   getElementHeadingSize,
   getElementType,
   getHeadingSizeKey,
+  isStyleActive,
+  toggleAlign,
   toggleStyle,
   toggleType
 } from '../utils/helper';
-import { useSlate } from 'slate-react';
-import { HeadingSize, WysiwygStyle, WysiwygType } from '../enums';
+import { useFocused, useSlate } from 'slate-react';
+import { HeadingSize, WysiwygAlign, WysiwygStyle, WysiwygType } from '../enums';
+import useImageUpload from '../hooks/useImageUpload';
+import { NOT_ALIGNABLE, NOT_STYLABLE } from '../constants';
 
 export default function Wysiwyg({
-  prevSelection,
-  linkEditorOpened,
+  isLinkEditorOpen,
   handleShowLinkEditor
 }: {
-  prevSelection: BaseSelection;
-  linkEditorOpened: boolean;
+  isLinkEditorOpen: boolean;
   handleShowLinkEditor: (visible: boolean) => void;
 }) {
   const editor = useSlate();
   const elementType = getElementType(editor);
+  const elementAlignment = getElementAlignment(editor);
   const elementHeadingSize = getElementHeadingSize(editor);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const selections = prevSelection;
-  const link = linkEditorOpened;
-  const show = handleShowLinkEditor;
+  const inputImgRef = useRef<HTMLInputElement>(null);
+  const isFocused = useFocused();
 
   return (
     <div className="flex flex-col gap-3">
       <div>
         <button
           className="flex w-full items-center justify-center gap-2 rounded border-2 font-bold hover:border-foreground hover:bg-foreground/50 active:bg-background"
-          onClick={() => console.log(getElement(editor))}
+          onMouseDown={() => console.log(getElement(editor))}
         >
           <span className="text-2xl">+</span>
           Paragraph
@@ -96,56 +97,201 @@ export default function Wysiwyg({
           className={`${
             elementType === WysiwygType.Paragraph ? 'bg-foreground/25' : ''
           }`}
-          onClick={() => toggleType(editor, WysiwygType.Paragraph)}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleType(editor, WysiwygType.Paragraph);
+          }}
         >
           P
         </button>
-        <button onClick={() => toggleType(editor, WysiwygType.Code)}>
+        <button
+          className={`${
+            elementType === WysiwygType.Code ? 'bg-foreground/25' : ''
+          }`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleType(editor, WysiwygType.Code);
+          }}
+        >
           <span className="text-xl font-semibold">&lt;/&gt;</span>
         </button>
-        <button onClick={() => toggleType(editor, WysiwygType.Quote)}>
+        <button
+          className={`${
+            elementType === WysiwygType.Quote ? 'bg-foreground/25' : ''
+          }`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleType(editor, WysiwygType.Quote);
+          }}
+        >
           <Icon icon="foundation:comment-quotes" />
         </button>
-        <button onClick={() => toggleType(editor, WysiwygType.ListBullets)}>
+        <button
+          className={`${
+            elementType === WysiwygType.ListBullets ? 'bg-foreground/25' : ''
+          }`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleType(editor, WysiwygType.ListBullets);
+          }}
+        >
           <Icon icon="ion:list" />
         </button>
-        <button onClick={() => toggleType(editor, WysiwygType.ListNumbers)}>
+        <button
+          className={`${
+            elementType === WysiwygType.ListNumbers ? 'bg-foreground/25' : ''
+          }`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleType(editor, WysiwygType.ListNumbers);
+          }}
+        >
           <Icon icon="f7:list-number" />
         </button>
-        <button>
+        <button
+          onMouseDown={(e) => {
+            e.preventDefault();
+            inputImgRef.current?.click();
+          }}
+        >
+          <input
+            ref={inputImgRef}
+            type="file"
+            name="image"
+            accept="image/png, image/gif, image/jpeg"
+            className="hidden"
+            onChange={useImageUpload(editor)}
+          />
           <Icon icon="bx:image-add" />
         </button>
-        <button onClick={() => toggleType(editor, WysiwygType.Divider)}>
+        <button
+          className={`${
+            elementType === WysiwygType.Divider ? 'bg-foreground/25' : ''
+          }`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleType(editor, WysiwygType.Divider);
+          }}
+        >
           ⎯
         </button>
       </div>
       <hr />
-      <div className="grid grid-cols-3 items-center justify-center gap-1 [&>*]:flex [&>*]:h-10 [&>*]:w-10 [&>*]:items-center [&>*]:justify-center [&>*]:rounded [&>*]:font-serif [&>*]:text-3xl hover:[&>*]:bg-foreground/50">
-        <button onClick={() => toggleStyle(editor, WysiwygStyle.Bold)}>
+      <div className="grid grid-cols-3 items-center justify-center gap-1 [&>*]:flex [&>*]:h-10 [&>*]:w-10 [&>*]:items-center [&>*]:justify-center [&>*]:rounded [&>*]:font-serif [&>*]:text-3xl enabled:hover:[&>*]:bg-foreground/50">
+        <button
+          className={`${
+            isStyleActive(editor, WysiwygStyle.Bold) ? 'bg-foreground/25' : ''
+          } hover:bg-transparent disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleStyle(editor, WysiwygStyle.Bold);
+          }}
+          disabled={elementType ? NOT_STYLABLE.includes(elementType) : false}
+        >
           <strong>B</strong>
         </button>
-        <button onClick={() => toggleStyle(editor, WysiwygStyle.Italic)}>
+        <button
+          className={`${
+            isStyleActive(editor, WysiwygStyle.Italic) ? 'bg-foreground/25' : ''
+          } hover:bg-transparent disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleStyle(editor, WysiwygStyle.Italic);
+          }}
+          disabled={elementType ? NOT_STYLABLE.includes(elementType) : false}
+        >
           <em>I</em>
         </button>
-        <button onClick={() => toggleStyle(editor, WysiwygStyle.Underline)}>
+        <button
+          className={`${
+            isStyleActive(editor, WysiwygStyle.Underline)
+              ? 'bg-foreground/25'
+              : ''
+          } hover:bg-transparent disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleStyle(editor, WysiwygStyle.Underline);
+          }}
+          disabled={elementType ? NOT_STYLABLE.includes(elementType) : false}
+        >
           <u>U</u>
         </button>
-        <button onClick={() => toggleStyle(editor, WysiwygStyle.Strike)}>
+        <button
+          className={`${
+            isStyleActive(editor, WysiwygStyle.Strike) ? 'bg-foreground/25' : ''
+          } disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleStyle(editor, WysiwygStyle.Strike);
+          }}
+          disabled={elementType ? NOT_STYLABLE.includes(elementType) : false}
+        >
           <s>S</s>
         </button>
-        <button>
+        <button
+          className={`${
+            elementAlignment === WysiwygAlign.Left ? 'bg-foreground/25' : ''
+          } disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleAlign(editor, WysiwygAlign.Left);
+          }}
+          disabled={elementType ? NOT_ALIGNABLE.includes(elementType) : false}
+        >
           <Icon icon="mingcute:align-left-fill" />
         </button>
-        <button>
+        <button
+          className={`${
+            elementAlignment === WysiwygAlign.Center ? 'bg-foreground/25' : ''
+          } disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleAlign(editor, WysiwygAlign.Center);
+          }}
+          disabled={elementType ? NOT_ALIGNABLE.includes(elementType) : false}
+        >
           <Icon icon="mingcute:align-center-fill" />
         </button>
-        <button>
+        <button
+          className={`${
+            elementAlignment === WysiwygAlign.Right ? 'bg-foreground/25' : ''
+          } disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleAlign(editor, WysiwygAlign.Right);
+          }}
+          disabled={elementType ? NOT_ALIGNABLE.includes(elementType) : false}
+        >
           <Icon icon="mingcute:align-right-fill" />
         </button>
-        <button>
+        <button
+          className={`${
+            elementAlignment === WysiwygAlign.Justify ? 'bg-foreground/25' : ''
+          } disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleAlign(editor, WysiwygAlign.Justify);
+          }}
+          disabled={elementType ? NOT_ALIGNABLE.includes(elementType) : false}
+        >
           <Icon icon="mingcute:align-justify-fill" />
         </button>
-        <button>
+        <button
+          className={`${
+            elementType === WysiwygStyle.Link ? 'bg-foreground/25' : ''
+          } disabled:text-foreground/50`}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            handleShowLinkEditor(true);
+          }}
+          disabled={
+            elementType
+              ? NOT_STYLABLE.includes(elementType) ||
+                isLinkEditorOpen ||
+                !isFocused
+              : false
+          }
+        >
           <Icon icon="ph:link-bold" />
         </button>
       </div>
