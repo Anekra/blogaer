@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../utils/shadcn';
 
-function Logo({
+export default function Logo({
   className = 'w-[80px] h-[50px] text-primary-foreground'
 }: { className?: string | undefined }) {
   return (
@@ -22,5 +22,3 @@ function Logo({
     </svg>
   );
 }
-
-export default Logo;

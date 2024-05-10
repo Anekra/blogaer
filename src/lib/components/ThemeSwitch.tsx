@@ -1,34 +1,8 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
 import { useTheme } from '@/lib/contexts/ThemeProvider';
+import ThemeIcon from './ThemeIcon';
 
-function ThemeIcon({
-  theme,
-  darkIconClass,
-  lightIconClass
-}: {
-  theme: string;
-  darkIconClass: string;
-  lightIconClass: string;
-}) {
-  if (theme === 'dark') {
-    return (
-      <Icon
-        icon="tabler:moon-filled"
-        className={`${darkIconClass} absolute inset-y-0 right-[6px] m-[auto_0] text-black`}
-      />
-    );
-  } else {
-    return (
-      <Icon
-        icon="tabler:sun-filled"
-        className={`${lightIconClass} absolute inset-y-0 left-1 m-[auto_0] text-white`}
-      />
-    );
-  }
-}
-
-function ThemeSwitch({
+export default function ThemeSwitch({
   className,
   darkIconClass,
   lightIconClass
@@ -59,5 +33,3 @@ function ThemeSwitch({
     </button>
   );
 }
-
-export default ThemeSwitch;

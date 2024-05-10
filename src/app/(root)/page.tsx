@@ -3,7 +3,7 @@ import Laptop from '@/lib/components/Laptop';
 import StoriesIcon from '@/lib/components/StoriesIcon';
 import Link from 'next/link';
 
-export default function Home() {
+export default function RootPage() {
   return (
     <div className="flex flex-col">
       <section className="gradient-background flex w-full flex-col items-center justify-between px-4 pt-20 sm:flex-row sm:gap-6 sm:px-12 xl:px-24">
@@ -32,7 +32,7 @@ export default function Home() {
           <div className="flex items-center gap-2 pb-2">
             <div className="flex shrink flex-col gap-2">
               <div className="flex items-center gap-2">
-                <div className="h-10 w-10 text-clip rounded-[50%] overflow-clip">
+                <div className="h-10 w-10 text-clip rounded-[50%]">
                   <img
                     src="https://images.unsplash.com/photo-1693225113452-8ab5cf5f6e7f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y3liZXJwdW5rJTIwaGVsbWV0fGVufDB8fDB8fHww"
                     alt="Profile"
@@ -46,7 +46,7 @@ export default function Home() {
                 Story Title Story Title Story Title
               </p>
             </div>
-            <div className="h-auto w-32 shrink-0 text-clip rounded-lg overflow-clip">
+            <div className="h-auto w-32 shrink-0 text-clip rounded-lg">
               <img
                 src="https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Story"

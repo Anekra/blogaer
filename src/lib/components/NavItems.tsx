@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import SearchBar from './SearchBar';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { User } from '../types';
+import { UserSession } from '../types';
 import {
   DropdownMenuGroup,
   DropdownMenuContent,
@@ -15,49 +15,60 @@ import {
 } from './ui/dropdown-menu';
 import LogoutDialog from './LogoutDialog';
 
-function Search() {
-  if (usePathname() === '/stories') {
-    return <SearchBar />;
-  }
-}
-
-function NavItems({ user }: { user: User }) {
+function NavItems({ user }: { user?: UserSession }) {
+  const currentPath = usePathname();
   return (
     <div className="flex grow justify-end lg:gap-4">
-      <nav className="hidden items-center gap-4 md:flex">
-        <Search />
+      <nav className="hidden gap-4 md:flex md:items-center">
+        {currentPath === '/stories' && <SearchBar />}
         {user ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Icon
-                icon="iconamoon:profile-circle-fill"
-                className="cursor-pointer text-4xl"
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="absolute -right-3 p-0">
-              <DropdownMenuLabel className="bg-gray-500/50 opacity-50">
-                <b>{user.username}</b>
-              </DropdownMenuLabel>
-              <DropdownMenuGroup className="w-40">
-                <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex justify-between"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Theme
-                  <div className="relative w-12">
-                    <ThemeSwitch
-                      className="absolute inset-y-0 right-0 m-[auto_0] h-4 w-12 appearance-none rounded-full bg-gray-500/50 py-3 after:absolute after:inset-y-[0] after:left-1 after:m-[auto_0] after:h-4 after:w-4 after:translate-x-0 after:rounded-full after:bg-primary-foreground after:duration-500 checked:after:h-4 checked:after:w-4 checked:after:translate-x-6 checked:after:rounded-full"
-                      darkIconClass=""
-                      lightIconClass="text-[16px]"
-                    />
-                  </div>
-                </DropdownMenuItem>
-                <LogoutDialog />
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex gap-4">
+            {currentPath === '/blog/publish' && (
+              <Link href="/register">
+                <button className="rounded-lg bg-primary-foreground px-2 py-1 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
+                  Publish
+                </button>
+              </Link>
+            )}
+            {currentPath === '/home' && (
+              <Link href="/blog/create">
+                <button className="rounded-lg bg-primary-foreground px-2 py-1 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
+                  Write
+                </button>
+              </Link>
+            )}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Icon
+                  icon="iconamoon:profile-circle-fill"
+                  className="cursor-pointer text-4xl text-primary-foreground"
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="absolute -right-3 p-0">
+                <DropdownMenuLabel className="bg-gray-500/50 opacity-50">
+                  <b>{user.username}</b>
+                </DropdownMenuLabel>
+                <DropdownMenuGroup className="w-40">
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="flex justify-between"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Theme
+                    <div className="relative w-12">
+                      <ThemeSwitch
+                        className="absolute inset-y-0 right-0 m-[auto_0] h-4 w-12 appearance-none rounded-full bg-gray-500/50 py-3 after:absolute after:inset-y-[0] after:left-1 after:m-[auto_0] after:h-4 after:w-4 after:translate-x-0 after:rounded-full after:bg-primary-foreground after:duration-500 checked:after:h-4 checked:after:w-4 checked:after:translate-x-6 checked:after:rounded-full"
+                        darkIconClass=""
+                        lightIconClass="text-[16px]"
+                      />
+                    </div>
+                  </DropdownMenuItem>
+                  <LogoutDialog />
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         ) : (
           <React.Fragment>
             <Link href="/login">

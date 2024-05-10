@@ -1,10 +1,10 @@
 import React from 'react';
-import CreateStoryForm from '@/lib/components/CreateStoryForm';
+import CreatePostForm from '@/lib/components/CreatePostForm';
 
 export default async function CreateStory() {
   return (
     <div>
-      <CreateStoryForm />
+      <CreatePostForm />
     </div>
   );
 }
