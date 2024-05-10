@@ -20,14 +20,13 @@ export type Token = {
   role: string;
 };
 
-export type User =
-  | {
-      username: string;
-      email: string | null | undefined;
-      role: string;
-    }
-  | undefined;
+export type UserSession = {
+  username: string;
+  email: string | null | undefined;
+  role: string;
+  token: string;
+};
 
 export type SlateEditor = BaseEditor & ReactEditor & HistoryEditor;
 
-export type ImgDimensions = { width: number, height: number};
+export type ImgDimensions = { width: number; height: number };

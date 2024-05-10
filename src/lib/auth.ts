@@ -53,13 +53,12 @@ export const {
 
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {      
       session.user.username = token.username;
       session.user.mail = token.email;
       session.user.role = token.role;
       session.user.token = token.access;
-      session.user.status = user.status;
-      session.user.expired = new Date(
+      session.expires = new Date(
         new Date().getTime() + 15 * 60000
       ).toISOString();
 

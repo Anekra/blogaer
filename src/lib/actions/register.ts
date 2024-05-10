@@ -8,11 +8,11 @@ export default async function register(
   values: z.infer<typeof RegisterFormSchema>
 ): Promise<any> {
   const url: string = `${process.env.API_ROUTE}/register`;
-  const currentUser = await auth()
+  const session = await auth()
 
   return await signIn('credentials', {
     redirect: true,
-    redirectTo: `/${currentUser?.user.username}`,
+    redirectTo: `/${session?.user.username}`,
     values: JSON.stringify(values),
     url
   });
