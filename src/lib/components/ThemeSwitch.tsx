@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTheme } from '@/lib/contexts/ThemeProvider';
 import ThemeIcon from './ThemeIcon';
+import { useTheme } from 'next-themes';
 
 export default function ThemeSwitch({
   className,
@@ -11,25 +11,22 @@ export default function ThemeSwitch({
   darkIconClass: string;
   lightIconClass: string;
 }) {
-  const { theme, setTheme } = useTheme();
-
-  const setNewTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.theme = newTheme;
-  };
+  const { setTheme, resolvedTheme } = useTheme();
 
   return (
-    <button onClick={setNewTheme}>
+    <button onClick={()=>setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}>
       <input
         type="checkbox"
         id="check"
-        checked={theme === 'dark'}
+        checked={resolvedTheme === 'dark'}
         onChange={() => {}}
         className={`${className}`}
-        onClick={setNewTheme}
       />
-      <ThemeIcon theme={theme} darkIconClass={darkIconClass} lightIconClass={lightIconClass} />
+      <ThemeIcon
+        theme={resolvedTheme}
+        darkIconClass={darkIconClass}
+        lightIconClass={lightIconClass}
+      />
     </button>
   );
 }
