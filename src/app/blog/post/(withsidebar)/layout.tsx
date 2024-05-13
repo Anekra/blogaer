@@ -4,7 +4,7 @@ import SideBar from '@/lib/components/SideBar';
 import { SideBarProvider } from '@/lib/contexts/SideBarContext';
 import React from 'react';
 
-export default async function UserLayout({
+export default async function BlogLayout({
   children
 }: {
   children: React.ReactNode;

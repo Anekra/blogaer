@@ -19,10 +19,11 @@ function NavItems({ user }: { user?: UserSession }) {
   const currentPath = usePathname();
   return (
     <div className="flex grow justify-end lg:gap-4">
-      <nav className="hidden gap-4 md:flex md:items-center">
+      <nav className="hidden items-center gap-4 md:flex">
         {currentPath === '/stories' && <SearchBar />}
         {user ? (
           <div className="flex gap-4">
+            {currentPath === '/home' && <SearchBar />}
             {currentPath === '/blog/publish' && (
               <Link href="/register">
                 <button className="rounded-lg bg-primary-foreground px-2 py-1 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
@@ -31,9 +32,9 @@ function NavItems({ user }: { user?: UserSession }) {
               </Link>
             )}
             {currentPath === '/home' && (
-              <Link href="/blog/create">
-                <button className="rounded-lg bg-primary-foreground px-2 py-1 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
-                  Write
+              <Link href="/blog/post/create">
+                <button className="rounded-lg bg-primary-foreground p-2 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
+                  Create Post
                 </button>
               </Link>
             )}
@@ -49,8 +50,6 @@ function NavItems({ user }: { user?: UserSession }) {
                   <b>{user.username}</b>
                 </DropdownMenuLabel>
                 <DropdownMenuGroup className="w-40">
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem
                     className="flex justify-between"
                     onClick={(e) => e.stopPropagation()}

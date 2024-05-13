@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 flex w-screen items-center justify-between gap-2 bg-light-background p-4">
+    <footer className="fixed bottom-0 flex w-screen items-center justify-between gap-2 bg-lighter-background p-4">
       <div className="flex gap-2 text-xs xs:text-sm sm:text-base lg:gap-6">
         <p>© Blogaer</p>
         <Link href="/terms" className="text-secondary-foreground underline">

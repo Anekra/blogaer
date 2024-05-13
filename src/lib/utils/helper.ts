@@ -232,3 +232,9 @@ export function convertFileToBase64(file: File) {
     };
   });
 }
+
+export function getLastPathName(path: string) {
+  const parts = path.split('/');
+  const lastName = parts[parts.length - 1];
+  return lastName.charAt(0).toUpperCase() + lastName.slice(1)
+}

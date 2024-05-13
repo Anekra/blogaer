@@ -1,7 +1,10 @@
+import PostHolder from '@/lib/components/PostHolder';
 import React from 'react'
 
 export default function HomePage() {
   return (
-    <div className="w-full p-4">Home</div>
+    <main className="w-full p-6">
+      <PostHolder />
+    </main>
   )
 }

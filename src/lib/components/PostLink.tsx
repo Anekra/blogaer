@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { RenderElementProps } from 'slate-react';
 
-export default function BlogLink({ props }: { props: RenderElementProps }) {
+export default function PostLink({ props }: { props: RenderElementProps }) {
   const { children, element } = props;
 
   return (

@@ -4,9 +4,9 @@ import { WysiwygStyle, WysiwygType } from '../enums';
 import CodeEditor from '../components/CodeEditor';
 import React from 'react';
 import Divider from '../components/Divider';
-import BlogImage from '../components/BlogImage';
+import PostImage from '../components/PostImage';
 import Quote from '../components/Quote';
-import BlogLink from '../components/BlogLink';
+import PostLink from '../components/PostLink';
 
 export default function useEditorConfig(editor: SlateEditor) {
   const { isVoid } = editor;
@@ -63,13 +63,11 @@ function renderElement(props: RenderElementProps) {
         </ol>
       );
     case WysiwygType.Image:
-      return <BlogImage element={element}>{children}</BlogImage>;
+      return <PostImage element={element}>{children}</PostImage>;
     case WysiwygType.Divider:
       return <Divider element={element}>{children}</Divider>;
     case WysiwygStyle.Link:
-      return (
-        <BlogLink props={props} />
-      );
+      return <PostLink props={props} />;
     default:
       return (
         <p

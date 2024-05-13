@@ -1,44 +1,45 @@
 'use client';
 
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-function SearchBar() {
-  const [searchFocused, setSearchFocused] = useState(false);
+export default function SearchBar() {
+  const searchRef = useRef<HTMLInputElement>(null);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   return (
     <div
-      className={`
-        ${searchFocused ? 'justify-end rounded-xl bg-primary-foreground' : ''} 
-        relative flex items-center
-      `}
+      className="relative flex items-center justify-end rounded-lg bg-primary-foreground p-[2px]"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget))
+          setIsSearchFocused(false);
+      }}
     >
       <input
+        ref={searchRef}
         type="text"
-        placeholder="Search"
-        className={`${searchFocused ? 'mr-10' : 'pl-10'}
-          hidden h-11 rounded-xl border border-gray-500 bg-background px-2 outline-none transition-[width] focus:border-primary-foreground dark:focus:border-primary-foreground md:flex md:w-40 lg:focus:w-[420px]`}
-        onFocus={() => {
-          setSearchFocused(true);
-        }}
-        onBlur={() => {
-          setSearchFocused(false);
-        }}
+        placeholder={`${isSearchFocused ? 'Search' : ''}`}
+        className={`${
+          isSearchFocused
+            ? 'mr-9 flex bg-background md:w-[400px]'
+            : 'w-9 bg-transparent'
+        } rounded-lg p-[6px] outline-none transition-all duration-300`}
+        onBlur={() => searchRef.current?.blur()}
       />
       <button
-        className={`${searchFocused ? '' : 'text-black/30'} 
-          absolute box-content h-11 px-2 text-2xl xs:rounded-[0_12px_12px_0]`}
+        className={`${
+          isSearchFocused ? 'bg-transparent active:text-foreground' : 'bg-primary-foreground'
+        } absolute box-content rounded-lg p-[6px] text-2xl text-primary`}
+        onClick={() => {
+          if (!isSearchFocused) {
+            searchRef.current?.focus();
+            setIsSearchFocused(true);
+          }
+          console.log('test');
+        }}
       >
-        <Icon
-          icon="ic:baseline-search"
-          className={`
-            ${searchFocused ? 'text-background' : 'text-gray-500'}
-            text-2xl
-          `}
-        />
+        <Icon icon="mingcute:search-2-fill" />
       </button>
     </div>
   );
 }
-
-export default SearchBar;

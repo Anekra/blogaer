@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function RootPage() {
   return (
-    <div className="flex flex-col">
+    <main className="flex flex-col">
       <section className="gradient-background flex w-full flex-col items-center justify-between px-4 pt-20 sm:flex-row sm:gap-6 sm:px-12 xl:px-24">
         <div className="order-2 flex flex-col gap-3 py-4 sm:order-1 sm:gap-10 sm:py-16 xl:w-[500px]">
           <h1 className="text-4xl font-bold xl:text-5xl">Exploring Thoughts</h1>
@@ -100,6 +100,6 @@ export default function RootPage() {
           </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

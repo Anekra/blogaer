@@ -5,7 +5,7 @@ export default function ThemeIcon({
   darkIconClass,
   lightIconClass
 }: {
-  theme: string;
+  theme?: string;
   darkIconClass: string;
   lightIconClass: string;
 }) {

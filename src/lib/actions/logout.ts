@@ -13,8 +13,6 @@ export default async function logout() {
     }
   });
 
-  console.log(logoutResponse.status);
-
   if (!logoutResponse.ok) throw new Error(logoutResponse.statusText);
 
   cookies().delete('jwt')

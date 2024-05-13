@@ -5,7 +5,7 @@ import { selectElement, setImageCaption } from '../utils/helper';
 import { useSlate } from 'slate-react';
 import Image from 'next/image';
 
-export default function BlogImage({
+export default function PostImage({
   element,
   children
 }: {
@@ -28,7 +28,9 @@ export default function BlogImage({
     <figure
       ref={frameRef}
       className={`${
-        isSelected ? 'rounded border border-dashed border-primary-foreground' : ''
+        isSelected
+          ? 'rounded border border-dashed border-primary-foreground'
+          : ''
       } flex w-full flex-col items-center justify-center gap-2 p-2`}
       onMouseDown={(e) => {
         e.preventDefault();
