@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --background: 0 0% 90%;
+    --background: 0 0% 92%;
     --foreground: 0 0% 4;
 
-    --light-background: 0 0% 95%;
-    --light-foreground: 0 0% 3;
+    --lighter-background: 0 0% 96%;
+    --lighter-foreground: 0 0% 3;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 4;
@@ -42,8 +42,8 @@
     --background: 14 0% 9%;
     --foreground: 0 0% 97%;
 
-    --light-background: 14 0% 19%;
-    --light-foreground: 0 0% 87%;
+    --lighter-background: 14 0% 19%;
+    --lighter-foreground: 0 0% 87%;
 
     --card: 0 0% 4;
     --card-foreground: 0 0% 98%;
