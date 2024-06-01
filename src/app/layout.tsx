@@ -1,9 +1,11 @@
 import './globals.css';
+import { ViewTransitions } from 'next-view-transitions';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { NextThemesProvider } from '@/lib/contexts/NextThemesProvider';
 import React from 'react';
 import { SessionProvider } from 'next-auth/react';
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,12 +20,20 @@ export default function GlobalLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <SessionProvider>
-          <NextThemesProvider>{children}</NextThemesProvider>
-        </SessionProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <SessionProvider>
+            <NextThemesProvider>
+              <NextTopLoader
+                color="hsl(var(--secondary-foreground))"
+                showSpinner={false}
+              />
+              {children}
+            </NextThemesProvider>
+          </SessionProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
