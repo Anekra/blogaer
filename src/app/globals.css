@@ -4,10 +4,10 @@
 
 @layer base {
   :root {
-    --background: 0 0% 92%;
+    --background: 14 0% 92%;
     --foreground: 0 0% 4;
 
-    --lighter-background: 0 0% 96%;
+    --lighter-background: 14 0% 96%;
     --lighter-foreground: 0 0% 3;
 
     --card: 0 0% 100%;
@@ -19,8 +19,8 @@
     --primary: 22, 100%, 73%;
     --primary-foreground: 358, 40%, 24%;
 
-    --secondary: 14, 33%, 80%;
-    --secondary-foreground: 14, 33%, 20%;
+    --secondary: 50, 100%, 73%;
+    --secondary-foreground: 40, 90%, 35%;
 
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -51,11 +51,11 @@
     --popover: 0 0% 4;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 11, 90%, 12%;
+    --primary: 11, 90%, 6%;
     --primary-foreground: 15, 50%, 60%;
 
-    --secondary: 14, 33%, 19%;
-    --secondary-foreground: 14, 33%, 80%;
+    --secondary: 49, 90%, 6%;
+    --secondary-foreground: 35, 50%, 60%;
 
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 64;
@@ -88,6 +88,11 @@ a {
   @apply dark:hover:brightness-125 hover:brightness-150;
 }
 
+/* hover brightening */
+.hv-bright {
+  @apply hover:brightness-150 dark:hover:brightness-125
+}
+
 /* placeholder */
 .ph::after {
   content: 'Type something...';
@@ -118,9 +123,12 @@ a {
 
 /* radial background */
 .radial-background {
-  background: radial-gradient(circle, rgb(255, 209, 197) 0%, rgb(196, 103, 82) 50%);
+  background: radial-gradient(
+    circle,
+    rgb(255, 209, 197) 0%,
+    rgb(196, 103, 82) 50%
+  );
 }
-
 .dark .radial-background {
   background: radial-gradient(circle, rgb(85, 76, 71) 0%, rgb(39, 20, 14) 50%);
 }
@@ -470,4 +478,26 @@ a {
   filter: blur(2px);
   background-blend-mode: multiply;
   border-top-right-radius: 20% 90%;
+}
+
+/* View Transition */
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes slide-from-right {
+  from { transform: translateX(30px); }
+}
+@keyframes slide-to-left {
+  to { transform: translateX(-30px); }
+}
+::view-transition-old(root) {
+  animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+::view-transition-new(root) {
+  animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
