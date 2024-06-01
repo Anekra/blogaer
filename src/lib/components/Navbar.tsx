@@ -1,18 +1,15 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import NavItems from './NavItems';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { usePathname } from 'next/navigation';
 import { getLastPathName } from '../utils/helper';
-import { useSession } from 'next-auth/react';
+import { UserSession } from '../types';
 
-export default function Navbar() {
+export default function Navbar({ user }: { user?: UserSession }) {
   const [isScrollingDown, setIsScrollingDown] = useState<boolean | null>(null);
   const [prevY, setPrevY] = useState(0);
-  const session = useSession()
-  const user = session.data?.user
   const path = usePathname();
   const lastPathName = getLastPathName(path);
 
@@ -30,8 +27,8 @@ export default function Navbar() {
   return (
     <header
       className={`${isScrollingDown ? '-translate-y-full' : 'translate-y-0'} ${
-        prevY > 0 ? 'bg-primary' : path === '/' ? '' : 'bg-lighter-background'
-      } fixed top-0 z-10 flex w-screen items-center justify-between gap-4 px-4 py-2 transition-transform duration-500`}
+        prevY === 0 && path === '/' ? '' : 'bg-lighter-background'
+      } fixed top-0 z-[8] flex w-screen items-center justify-between gap-4 px-4 py-2 transition-transform duration-500`}
     >
       <Link href="/">
         <Logo />

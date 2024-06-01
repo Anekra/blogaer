@@ -6,11 +6,12 @@ import React from 'react';
 export default function PostHolder() {
   return (
     <div className="flex w-[400px] flex-col rounded-md bg-lighter-background">
-      <div className="flex items-center p-2">
-        <h1 className="flex-1 text-center text-xl font-bold">
-          Blog Post Title
-        </h1>
-        <Icon icon="iconamoon:bookmark-fill" className="text-2xl" />
+      <div className="relative flex items-center justify-center p-2">
+        <h1 className="text-center text-xl font-bold">Blog Post Title</h1>
+        <Icon
+          icon="iconamoon:bookmark-fill"
+          className="absolute right-0 me-[6px] text-2xl"
+        />
       </div>
       <div>
         <Image

@@ -153,7 +153,7 @@ export default function RegisterForm() {
         <div className="mt-2 flex items-center">
           <hr className="h-1 w-full border-none bg-gradient-to-l from-foreground" />
           <p className="w-fit shrink-0 px-2 text-center text-sm">
-            Or sign up with
+            Or login with
           </p>
           <hr className="h-1 w-full border-none bg-gradient-to-r from-foreground" />
         </div>

@@ -1,6 +1,8 @@
+
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { cookies } from 'next/headers';
+import { Token } from './types';
 
 export const {
   handlers: { GET, POST },
@@ -53,12 +55,13 @@ export const {
 
       return token;
     },
-    async session({ session, token }) {      
-      session.user.username = token.username;
-      session.user.mail = token.email;
-      session.user.role = token.role;
-      session.user.token = token.access;
-      session.expires = new Date(
+    async session({ session, token }) {
+      const tkn = token as Token;
+      session.user.username = tkn.username;
+      session.user.email = tkn.email;
+      session.user.role = tkn.role;
+      session.user.token = tkn.access;
+      session.user.expires = new Date(
         new Date().getTime() + 15 * 60000
       ).toISOString();
 

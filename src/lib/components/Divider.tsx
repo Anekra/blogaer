@@ -1,7 +1,7 @@
 import React from 'react';
 import { CustomElement } from '../slate';
 import { useSlate } from 'slate-react';
-import { selectElement } from '../utils/helper';
+import { getPath, selectElement } from '../utils/helper';
 
 export default function Divider({
   children,
@@ -11,16 +11,20 @@ export default function Divider({
   element: CustomElement;
 }) {
   const editor = useSlate();
+  const path = getPath(editor, element);
   const isSelected =
-    editor.selection?.anchor.path.join() === element.position.join();
+    !!path && editor.selection?.anchor.path.slice(0, 1).join() === path?.join();
+
   return (
     <div
       className={`${
-        isSelected ? 'rounded border border-dashed border-primary-foreground' : ''
+        isSelected
+          ? 'rounded border border-dashed border-primary-foreground'
+          : ''
       } flex h-20 items-center`}
       onMouseDown={(e) => {
         e.preventDefault();
-        selectElement(editor, element.position);
+        if (path) selectElement(editor, path);
       }}
       contentEditable={false}
     >

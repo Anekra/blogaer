@@ -28,8 +28,7 @@ export default function useImageUpload(editor: SlateEditor) {
           imageWidth: img.width,
           imageHeight: img.height,
           imageCaption: '',
-          imageBase64: base64,
-          position: selection.focus.path
+          imageBase64: base64
         });
       };
     },

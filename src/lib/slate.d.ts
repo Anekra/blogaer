@@ -1,5 +1,5 @@
 import { Extension } from '@uiw/react-codemirror';
-import { BaseEditor } from 'slate';
+import { BaseEditor, Path } from 'slate';
 import { HistoryEditor } from 'slate-history';
 import { ReactEditor } from 'slate-react';
 import { WysiwygType } from './enums';

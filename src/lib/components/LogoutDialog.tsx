@@ -13,16 +13,16 @@ import logout from '../actions/logout';
 export default function LogoutDialog() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="bg-transparent p-2 focus:bg-transparent">
         <DropdownMenuItem
-          className="flex justify-between"
+          className="flex w-full justify-between"
           onSelect={(e) => e.preventDefault()}
         >
           Log out
           <Icon icon="tabler:logout" className="text-xl" />
         </DropdownMenuItem>
       </DialogTrigger>
-      <DialogContent className="flex w-fit flex-col gap-8">
+      <DialogContent className="flex w-fit flex-col gap-8 px-12 py-10">
         <DialogTitle>You sure want to logout?</DialogTitle>
         <div className="flex justify-between gap-4">
           <DialogClose>

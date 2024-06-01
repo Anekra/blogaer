@@ -1,3 +1,4 @@
+import { auth } from '@/lib/auth';
 import Footer from '@/lib/components/Footer';
 import Navbar from '@/lib/components/Navbar';
 import SideBar from '@/lib/components/SideBar';
@@ -9,11 +10,12 @@ export default async function StatisticLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
-    <div className="flex min-h-screen pb-14 pt-16">
+    <div className="relative flex min-h-screen">
       <Navbar />
       <SideBarProvider>
-        <SideBar />
+        <SideBar user={session?.user} />
       </SideBarProvider>
       {children}
       <Footer />

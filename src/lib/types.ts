@@ -17,12 +17,13 @@ export type UserResponse = {
 export type Token = {
   access: string;
   username: string;
+  email: string;
   role: string;
 };
 
 export type UserSession = {
   username: string;
-  email: string | null | undefined;
+  email: string;
   role: string;
   token: string;
 };

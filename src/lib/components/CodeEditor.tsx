@@ -3,7 +3,7 @@ import ReactCodeMirror from '@uiw/react-codemirror';
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { useSlate } from 'slate-react';
 import { CustomElement } from '../slate';
-import { removeElement, setCodeElement } from '../utils/helper';
+import { getPath, removeElement, setCodeElement } from '../utils/helper';
 
 export default function CodeEditor({
   element,
@@ -11,6 +11,7 @@ export default function CodeEditor({
   element: CustomElement;
 }) {
   const editor = useSlate();
+  const path = getPath(editor, element);
 
   return (
     <ReactCodeMirror
@@ -27,7 +28,7 @@ export default function CodeEditor({
       }}
       onChange={(val) => setCodeElement(editor, val)}
       onFocus={() => {
-        if ('element' in element) editor.select(element.position)
+        if (path) editor.select(path)
       }}
       onKeyDown={(e) => {
         if (

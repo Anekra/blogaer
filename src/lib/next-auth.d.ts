@@ -5,14 +5,15 @@ declare module '@auth/core/types' {
   interface Session {
     user: {
       username: string;
-      email: string | null | undefined;
+      email: string;
       role: string;
       token: string;
+      expires: string;
     };
   }
   interface User extends UserResponse {}
 }
 
 declare module '@auth/core/jwt' {
-  interface JWT extends DefaultJWT, Token {}
+  interface JWT extends Token {}
 }

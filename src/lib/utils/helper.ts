@@ -1,12 +1,21 @@
-import { BaseRange, Editor, Element, Path, Range, Transforms } from 'slate';
+import { Editor, Element, Node, Path, Range, Transforms } from 'slate';
 import { SlateEditor } from '../types';
 import { CustomElement } from '../slate';
 import { HeadingSize, WysiwygAlign, WysiwygStyle, WysiwygType } from '../enums';
 import { ReactEditor } from 'slate-react';
-import { LIST_TYPES, NOT_ALIGNABLE, POSITION_TYPES } from '../constants';
+import { LIST_TYPES, NOT_ALIGNABLE, PATH_TYPES } from '../constants';
 
 export function addElement(editor: SlateEditor, element: CustomElement) {
   Transforms.insertNodes(editor, element);
+}
+
+export function addParagraph(editor: SlateEditor) {
+  addElement(editor, {
+    type: WysiwygType.Paragraph,
+    children: [{ text: '' }],
+    align: WysiwygAlign.Left
+  });
+  focusEditor(editor);
 }
 
 export function addLink(
@@ -34,10 +43,10 @@ export function addLink(
   }
 }
 
-export function removeElement(editor: SlateEditor, at?: BaseRange) {
+export function removeElement(editor: SlateEditor) {
   const { selection } = editor;
   if (!selection) return;
-  Transforms.removeNodes(editor, { at });
+  Transforms.removeNodes(editor);
 }
 
 export function getElement(editor: SlateEditor): CustomElement | undefined {
@@ -73,6 +82,12 @@ export function getLinkElement(editor: SlateEditor) {
   return linkElement;
 }
 
+export function getPath(editor: SlateEditor, node: Node) {
+  const { selection } = editor;
+  if (!selection) return;
+  return ReactEditor.findPath(editor, node);
+}
+
 export function setCodeElement(editor: SlateEditor, value: string) {
   const { selection } = editor;
   if (!selection) return;
@@ -87,8 +102,8 @@ export function setImageCaption(editor: SlateEditor, caption: string) {
   Transforms.setNodes(editor, { imageCaption: caption });
 }
 
-export function selectElement(editor: SlateEditor, position: Path) {
-  Transforms.select(editor, position);
+export function selectElement(editor: SlateEditor, path: Path) {
+  Transforms.select(editor, path);
 }
 
 export function toggleType(
@@ -115,7 +130,7 @@ export function toggleType(
     Transforms.setNodes(editor, {
       type,
       code: '',
-      position: selection.anchor.path
+      path: selection.anchor.path
     });
   } else if (LIST_TYPES.includes(type)) {
     Transforms.unsetNodes(editor, 'align');
@@ -125,15 +140,8 @@ export function toggleType(
       align: WysiwygAlign.Left,
       children: []
     });
-  } else if (type === WysiwygType.Image) {
-    Transforms.setNodes(editor, {
-      type,
-      url: element.url,
-      caption: element.caption,
-      position: selection.anchor.path
-    });
   } else if (type === WysiwygType.Divider) {
-    Transforms.setNodes(editor, { type, position: selection.anchor.path });
+    Transforms.setNodes(editor, { type, path: selection.anchor.path });
   } else {
     Transforms.setNodes(editor, { type, align: WysiwygAlign.Left });
   }
@@ -146,8 +154,8 @@ export function toggleType(
     Transforms.unsetNodes(editor, 'code');
   }
 
-  if ('position' in element && !POSITION_TYPES.includes(type)) {
-    Transforms.unsetNodes(editor, 'position');
+  if ('path' in element && !PATH_TYPES.includes(type)) {
+    Transforms.unsetNodes(editor, 'path');
   }
 
   if (NOT_ALIGNABLE.includes(type)) {
@@ -236,5 +244,5 @@ export function convertFileToBase64(file: File) {
 export function getLastPathName(path: string) {
   const parts = path.split('/');
   const lastName = parts[parts.length - 1];
-  return lastName.charAt(0).toUpperCase() + lastName.slice(1)
+  return lastName.charAt(0).toUpperCase() + lastName.slice(1);
 }

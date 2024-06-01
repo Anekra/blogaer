@@ -1,6 +1,5 @@
 'use client';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useContext } from 'react';
 import {
@@ -9,15 +8,16 @@ import {
   AccordionItem,
   AccordionTrigger
 } from './ui/accordion';
-import { useSession } from 'next-auth/react';
 import { SideBarContext } from '../contexts/SideBarContext';
+import { UserSession } from '../types';
+import { Link } from 'next-view-transitions';
 
-export default function SideBar() {
+export default function SideBar({ user }: { user?: UserSession }) {
   const currentPath = usePathname();
-  const session = useSession();
   const { isCollapsed, toggleSideBar } = useContext(SideBarContext);
+  
   return (
-    <aside className="flex flex-col items-center gap-2 bg-lighter-background p-3">
+    <aside className="flex flex-col items-center gap-2 bg-lighter-background px-3 pb-14 pt-[76px]">
       <button
         className={`${
           isCollapsed ? '' : 'self-end'
@@ -64,9 +64,9 @@ export default function SideBar() {
             </span>
           </Link>
           <Link
-            href={`/${session.data?.user.username}`}
+            href={`/${user?.username}`}
             className={`${
-              currentPath === `/${session.data?.user.username}`
+              currentPath === `/${user?.username}`
                 ? 'bg-foreground/25 font-bold'
                 : ''
             } ${
@@ -162,9 +162,9 @@ export default function SideBar() {
             </span>
           )}
           <Link
-            href="settings/account"
+            href="/settings/account"
             className={`${
-              currentPath === 'settings/account'
+              currentPath === '/settings/account'
                 ? 'bg-foreground/25 font-bold'
                 : ''
             } ${

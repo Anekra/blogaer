@@ -8,7 +8,7 @@ import {
   DropdownMenuRadioItem
 } from './ui/dropdown-menu';
 import {
-  getElement,
+  addParagraph,
   getElementAlignment,
   getElementHeadingSize,
   getElementType,
@@ -43,7 +43,11 @@ export default function Wysiwyg({
       <div>
         <button
           className="flex w-full items-center justify-center gap-2 rounded border-2 font-bold hover:border-foreground hover:bg-foreground/50 active:bg-background"
-          onMouseDown={() => console.log(getElement(editor))}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            addParagraph(editor);
+          }
+        }
         >
           <span className="text-2xl">+</span>
           Paragraph
