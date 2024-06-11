@@ -1,17 +1,21 @@
 import CategoriesIcon from '@/lib/components/CategoriesIcon';
 import Laptop from '@/lib/components/Laptop';
 import StoriesIcon from '@/lib/components/StoriesIcon';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function RootPage() {
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col pb-8">
       <section className="gradient-background flex w-full flex-col items-center justify-between px-4 pt-20 sm:flex-row sm:gap-6 sm:px-12 xl:px-24">
-        <div className="order-2 flex flex-col gap-3 py-4 sm:order-1 sm:gap-10 sm:py-16 xl:w-[500px]">
-          <h1 className="text-4xl font-bold xl:text-5xl">Exploring Thoughts</h1>
-          <p className="pb-2 md:w-[300px] xl:w-[400px] xl:text-lg">
-            Create your own stories. Share your expertise with others. And
-            explore many stories, insights, and experiences.
+        <div className="order-2 flex flex-col gap-3 py-4 sm:order-1 sm:gap-6 sm:py-16 xl:w-[500px]">
+          <h1 className="pb-3 text-4xl font-bold xl:text-5xl">
+            Exploring Thoughts
+          </h1>
+          <p className="md:w-[300px] xl:w-[400px] xl:text-lg">
+            Explore many articles and stories with different categories and
+            languages, from the ones who love to share their knowledge, start
+            your journey now.
           </p>
           <Link href="/explore" className="w-fit">
             <button className="rounded-xl bg-primary-foreground px-4 py-2 font-bold text-primary">
@@ -33,11 +37,7 @@ export default function RootPage() {
             <div className="flex shrink flex-col gap-2">
               <div className="flex items-center gap-2">
                 <div className="h-10 w-10 text-clip rounded-[50%]">
-                  <img
-                    src="https://images.unsplash.com/photo-1693225113452-8ab5cf5f6e7f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y3liZXJwdW5rJTIwaGVsbWV0fGVufDB8fDB8fHww"
-                    alt="Profile"
-                    className="h-full w-auto object-cover"
-                  />
+                  <Image src="" alt="Cover" width={200} height={100} />
                 </div>
                 <p>Writer&#39;s Name</p>
               </div>
@@ -47,10 +47,12 @@ export default function RootPage() {
               </p>
             </div>
             <div className="h-auto w-32 shrink-0 text-clip rounded-lg">
-              <img
-                src="https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              <Image
+                src=""
                 alt="Story"
                 className="object-cover"
+                width={200}
+                height={100}
               />
             </div>
           </div>

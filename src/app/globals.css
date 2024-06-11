@@ -88,6 +88,11 @@ a {
   @apply dark:hover:brightness-125 hover:brightness-150;
 }
 
+/* button styles */
+.btn-solid {
+  @apply rounded-lg bg-primary-foreground p-2 font-bold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground
+}
+
 /* hover brightening */
 .hv-bright {
   @apply hover:brightness-150 dark:hover:brightness-125

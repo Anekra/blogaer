@@ -7,18 +7,30 @@ export type UserResponse = {
   message: string;
   data: {
     username: string;
+    access: string;
     email: string;
     role: string;
-    token: string;
+    refresh: string;
+  };
+};
+
+export type RefreshTokenResponse = {
+  status: string;
+  message: string;
+  data: {
+    username: string;
+    access: string;
     refresh: string;
   };
 };
 
 export type Token = {
   access: string;
+  refresh: string;
   username: string;
   email: string;
   role: string;
+  expires: number;
 };
 
 export type UserSession = {

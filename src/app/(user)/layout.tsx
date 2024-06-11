@@ -11,6 +11,7 @@ export default async function UserLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  
   return (
     <div className="relative flex min-h-screen">
       <Navbar user={session?.user} />

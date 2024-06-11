@@ -13,7 +13,10 @@ import logout from '../actions/logout';
 export default function LogoutDialog() {
   return (
     <Dialog>
-      <DialogTrigger asChild className="bg-transparent p-2 focus:bg-transparent">
+      <DialogTrigger
+        asChild
+        className="bg-transparent p-2 focus:bg-transparent"
+      >
         <DropdownMenuItem
           className="flex w-full justify-between"
           onSelect={(e) => e.preventDefault()}
@@ -30,13 +33,12 @@ export default function LogoutDialog() {
               CANCEL
             </button>
           </DialogClose>
-          <DialogClose>
-            <button
-              className="rounded bg-primary px-6 py-2"
-              onClick={() => logout()}
-            >
-              LOGOUT
-            </button>
+          <DialogClose onClick={(e) => e.stopPropagation()}>
+            <form action={logout}>
+              <button className="rounded bg-primary px-6 py-2" type="submit">
+                LOGOUT
+              </button>
+            </form>
           </DialogClose>
         </div>
       </DialogContent>

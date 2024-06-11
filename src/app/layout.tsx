@@ -14,11 +14,7 @@ export const metadata: Metadata = {
   description: 'Blog platform by Andika Eka Putra'
 };
 
-export default function GlobalLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function GlobalLayout({ children }: { children: React.ReactNode; }) {
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>

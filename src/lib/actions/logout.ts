@@ -9,12 +9,11 @@ export default async function logout() {
   const logoutResponse = await fetch(url, {
     headers: {
       Origin: 'http://localhost:3000',
-      Cookie: `jwt=${cookies().get('jwt')?.value}` 
+      Cookie: `jwt=${cookies().get('session-token')?.value}` 
     }
   });
 
-  if (!logoutResponse.ok) throw new Error(logoutResponse.statusText);
+  if (!logoutResponse.ok) throw new Error('Logout failed');
 
-  cookies().delete('jwt')
   return await signOut({ redirect: true, redirectTo: '/' });
 }

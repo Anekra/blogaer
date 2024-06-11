@@ -16,6 +16,7 @@ import FormIndicator from './FormIndicator';
 import { PASS_CHECK } from '@/lib/constants';
 import login from '@/lib/actions/login';
 import { LoginFormSchema } from '@/lib/zodSchemas';
+import GoogleLoginBtn from './GoogleLoginBtn';
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof LoginFormSchema>>({
@@ -127,10 +128,7 @@ export default function LoginForm() {
           <hr className="h-1 w-full border-none bg-gradient-to-r from-foreground" />
         </div>
         <div className="flex justify-center gap-6 p-4">
-          <Icon
-            icon="uim:google"
-            className="text-4xl text-primary-foreground hover:cursor-pointer hover:contrast-150"
-          />
+          <GoogleLoginBtn />
           <Icon
             icon="teenyicons:apple-solid"
             className="text-4xl text-primary-foreground hover:cursor-pointer hover:contrast-150"

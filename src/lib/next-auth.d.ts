@@ -8,7 +8,8 @@ declare module '@auth/core/types' {
       email: string;
       role: string;
       token: string;
-      expires: string;
+      image: string;
+      expires: number;
     };
   }
   interface User extends UserResponse {}

@@ -17,6 +17,7 @@ import LogoutDialog from './LogoutDialog';
 import { useTheme } from 'next-themes';
 import { ChevronDown } from 'lucide-react';
 import PreviewDrawer from './PreviewDrawer';
+import test from '../actions/test';
 
 function NavItems({ user }: { user?: UserSession }) {
   const currentPath = usePathname();
@@ -26,17 +27,16 @@ function NavItems({ user }: { user?: UserSession }) {
     <div className="flex grow justify-end lg:gap-4">
       <nav className="hidden items-center gap-4 md:flex">
         {currentPath === '/stories' && <SearchBar />}
+        <form action={test}>
+          <button type="submit" className="btn-solid">REFRESH</button>
+        </form>
         {user ? (
           <div className="flex gap-4">
             {currentPath === '/home' && <SearchBar />}
-            {currentPath === '/blog/post/create' && (
-              <PreviewDrawer />
-            )}
+            {currentPath === '/blog/post/create' && <PreviewDrawer />}
             {currentPath === '/home' && (
               <Link href="/blog/post/create">
-                <button className="rounded-lg bg-primary-foreground p-2 font-extrabold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground">
-                  Create New Post
-                </button>
+                <button className="btn-solid">Create New Post</button>
               </Link>
             )}
             <DropdownMenu>
