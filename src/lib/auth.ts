@@ -36,25 +36,20 @@ export const {
   },
   callbacks: {
     async jwt({ token, user, profile }) {
-      console.log('jwt callback: *********************');
-      console.log('token zero > ', token.refresh);
 
       const now = new Date();
       if (user && !profile) {
         // With credentials
-        console.log('********WITH CREDENTIALS**********');
         return {
           access: user.data.access,
           refresh: user.data.refresh,
           username: user.data.username,
           email: user.data.email,
           role: user.data.role,
-          expires: new Date(now.getTime() + 10 * 60 * 1000).getTime()
+          expires: new Date(now.getTime() + 20 * 60 * 1000).getTime()
         };
       } else if (user && profile) {
         // With oauth
-        console.log('WITH OAUTH');
-
         const data = {
           email: user.email,
           picture: user.image,
@@ -80,13 +75,13 @@ export const {
           username: userResponse.data.username,
           email: userResponse.data.email,
           role: userResponse.data.role,
-          expires: new Date(now.getTime() + 10 * 60 * 1000).getTime()
+          expires: new Date(now.getTime() + 20 * 60 * 1000).getTime()
         };
       } else if (now.getTime() < token.expires) {
         return token;
       }
 
-      console.log('token.expires > ', now.getTime() > token.expires);
+      console.log('token.expires >>> ', now.getTime() > token.expires);
 
       const response = await fetch(`${process.env.API_ROUTE}/auth/refresh`, {
         method: 'GET',
@@ -104,7 +99,7 @@ export const {
         ...token,
         access: tokenResponse.data.access,
         refresh: tokenResponse.data.refresh,
-        expires: new Date(now.getTime() + 10 * 60 * 1000).getTime()
+        expires: new Date(now.getTime() + 20 * 60 * 1000).getTime()
       };
     },
     async session({ session, token }) {
@@ -114,7 +109,8 @@ export const {
         session.user.username = token.username;
         session.user.email = token.email;
         session.user.role = token.role;
-        session.user.token = token.access;
+        session.sessionToken = token.access;
+        session.user.refresh = token.refresh;
         session.user.expires = token.expires;
       }
 

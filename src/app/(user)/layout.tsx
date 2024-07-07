@@ -11,14 +11,16 @@ export default async function UserLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  
+
   return (
-    <div className="relative flex min-h-screen">
+    <div className="relative flex min-h-screen w-full flex-col">
       <Navbar user={session?.user} />
-      <SideBarProvider>
-        <SideBar user={session?.user} />
-      </SideBarProvider>
-      {children}
+      <div className="flex">
+        <SideBarProvider>
+          <SideBar user={session?.user} />
+        </SideBarProvider>
+        {children}
+      </div>
       <Footer />
     </div>
   );

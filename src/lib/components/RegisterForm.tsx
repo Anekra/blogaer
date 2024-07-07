@@ -14,7 +14,7 @@ import {
 import { Input } from './ui/input';
 import FormIndicator from './FormIndicator';
 import { PASS_CHECK } from '@/lib/constants';
-import register from '@/lib/actions/register';
+import register from '../actions/register';
 import { RegisterFormSchema } from '@/lib/zodSchemas';
 
 export default function RegisterForm() {

@@ -15,13 +15,11 @@ import { Link } from 'next-view-transitions';
 export default function SideBar({ user }: { user?: UserSession }) {
   const currentPath = usePathname();
   const { isCollapsed, toggleSideBar } = useContext(SideBarContext);
-  
+
   return (
-    <aside className="flex flex-col items-center gap-2 bg-lighter-background px-3 pb-14 pt-[76px]">
+    <aside className="hidden h-screen flex-col items-center gap-2 bg-background px-3 pb-16 pt-[76px] transition-[width] duration-300 md:flex">
       <button
-        className={`${
-          isCollapsed ? '' : 'self-end'
-        } rounded-full p-2 hover:bg-gradient-to-t hover:from-background hover:to-foreground/10`}
+        className="rounded-full p-2 hover:bg-gradient-to-t hover:from-background hover:to-foreground/10"
         onClick={() => toggleSideBar()}
       >
         <Icon

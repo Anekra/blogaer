@@ -1,5 +1,4 @@
 'use client';
-
 import * as z from 'zod';
 import { Icon } from '@iconify/react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -14,7 +13,7 @@ import {
 import { Input } from './ui/input';
 import FormIndicator from './FormIndicator';
 import { PASS_CHECK } from '@/lib/constants';
-import login from '@/lib/actions/login';
+import login from '../actions/login';
 import { LoginFormSchema } from '@/lib/zodSchemas';
 import GoogleLoginBtn from './GoogleLoginBtn';
 
@@ -31,7 +30,14 @@ export default function LoginForm() {
     <div className="z-[1] flex flex-col gap-6">
       <FormProvider {...form}>
         <form
-          onSubmit={form.handleSubmit((values) => login(values))}
+          onSubmit={form.handleSubmit(async (values) => {
+            const response = await login(values);
+            if (response.success) {
+              window.location.href = '/home';
+            } else {
+              console.error('Login error');
+            }
+          })}
           className="flex flex-col gap-2"
           noValidate
         >

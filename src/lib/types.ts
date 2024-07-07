@@ -37,8 +37,15 @@ export type UserSession = {
   username: string;
   email: string;
   role: string;
-  token: string;
+  image: string;
+  refresh: string;
+  expires: number;
 };
+
+export type PublishPost = {
+  content: any;
+  tags: string[];
+}
 
 export type SlateEditor = BaseEditor & ReactEditor & HistoryEditor;
 

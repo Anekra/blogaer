@@ -1,15 +1,14 @@
 'use server'
-
-import { signOut } from '@/lib/auth';
-import { cookies } from 'next/headers';
+import { auth, signOut } from '@/lib/auth';
 
 export default async function logout() {
   const url: string = `${process.env.API_ROUTE}/logout`;
+  const session = await auth()
 
   const logoutResponse = await fetch(url, {
     headers: {
       Origin: 'http://localhost:3000',
-      Cookie: `jwt=${cookies().get('session-token')?.value}` 
+      Cookie: `jwt=${session?.user.refresh}` 
     }
   });
 
