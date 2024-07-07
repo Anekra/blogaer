@@ -4,71 +4,71 @@
 
 @layer base {
   :root {
-    --background: 14 0% 92%;
-    --foreground: 0 0% 4;
+    --background: 240 240 240;
+    --foreground: 15 15 15;
 
-    --lighter-background: 14 0% 96%;
-    --lighter-foreground: 0 0% 3;
+    --lighter-background: 255 255 255;
+    --lighter-foreground: 8 8 8;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4;
+    --card: 255 255 255;
+    --card-foreground: 5 5 5;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4;
+    --popover: 240 240 240;
+    --popover-foreground: 10 10 10;
 
-    --primary: 22, 100%, 73%;
-    --primary-foreground: 358, 40%, 24%;
+    --primary: 255 168 117;
+    --primary-foreground: 86 37 38;
 
-    --secondary: 50, 100%, 73%;
-    --secondary-foreground: 40, 90%, 35%;
+    --secondary: 255 232 117;
+    --secondary-foreground: 170 116 9;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 245 245 245;
+    --muted-foreground: 115 115 115;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 245 245 245;
+    --accent-foreground: 23 23 23;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 239 67 67;
+    --destructive-foreground: 250 250 250;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 4;
+    --border: 227 227 227;
+    --input: 227 227 227;
+    --ring: 10 10 10;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 14 0% 9%;
-    --foreground: 0 0% 97%;
+    --background: 23 23 23;
+    --foreground: 247 247 247;
 
-    --lighter-background: 14 0% 19%;
-    --lighter-foreground: 0 0% 87%;
+    --lighter-background: 48 48 48;
+    --lighter-foreground: 222 222 222;
 
-    --card: 0 0% 4;
-    --card-foreground: 0 0% 98%;
+    --card: 10 10 10;
+    --card-foreground: 250 250 250;
 
-    --popover: 0 0% 4;
-    --popover-foreground: 0 0% 98%;
+    --popover: 10 10 10;
+    --popover-foreground: 250 250 250;
 
-    --primary: 11, 90%, 6%;
-    --primary-foreground: 15, 50%, 60%;
+    --primary: 29 7 2;
+    --primary-foreground: 204 127 102;
 
-    --secondary: 49, 90%, 6%;
-    --secondary-foreground: 35, 50%, 60%;
+    --secondary: 29 24 2;
+    --secondary-foreground: 204 162 102;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 64;
+    --muted: 38 38 38;
+    --muted-foreground: 163 163 163;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 38 38 38;
+    --accent-foreground: 250 250 250;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 129 29 29;
+    --destructive-foreground: 250 250 250;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 38 38 38;
+    --input: 38 38 38;
+    --ring: 212 212 212;
   }
 }
 
@@ -87,15 +87,34 @@ body {
 a {
   @apply dark:hover:brightness-125 hover:brightness-150;
 }
-
-/* button styles */
-.btn-solid {
-  @apply rounded-lg bg-primary-foreground p-2 font-bold text-primary active:border-secondary active:bg-secondary active:text-primary-foreground
+button {
+  @apply active:brightness-200
 }
 
-/* hover brightening */
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--lighter-background)); 
+  border-radius: 10px;
+}
+
+/* button styles */
+.btn-p-solid-a {
+  @apply rounded-lg p-2 font-bold text-primary hover:bg-secondary hover:text-primary-foreground;
+}
+.btn-s-solid-b {
+  @apply whitespace-nowrap rounded-3xl px-4 h-9 font-bold bg-secondary-foreground text-secondary hover:bg-secondary hover:text-secondary-foreground;
+}
+.btn-s-translucent-b {
+  @apply whitespace-nowrap rounded-3xl px-4 h-9 font-bold bg-secondary-foreground/10 text-secondary-foreground/50 dark:bg-secondary-foreground/5 dark:text-secondary-foreground/30 hover:bg-secondary hover:text-secondary-foreground dark:hover:bg-secondary dark:hover:text-secondary-foreground;
+}
+
+/* hover bright */
 .hv-bright {
-  @apply hover:brightness-150 dark:hover:brightness-125
+  @apply hover:brightness-150 dark:hover:brightness-125;
 }
 
 /* placeholder */
@@ -487,22 +506,32 @@ a {
 
 /* View Transition */
 @keyframes fade-in {
-  from { opacity: 0; }
+  from {
+    opacity: 0;
+  }
 }
 @keyframes fade-out {
-  to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }
 @keyframes slide-from-right {
-  from { transform: translateX(30px); }
+  from {
+    transform: translateX(30px);
+  }
 }
 @keyframes slide-to-left {
-  to { transform: translateX(-30px); }
+  to {
+    transform: translateX(-30px);
+  }
 }
 ::view-transition-old(root) {
-  animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+  animation:
+    90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
     300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
 }
 ::view-transition-new(root) {
-  animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+  animation:
+    210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
     300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
