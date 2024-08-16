@@ -2,10 +2,8 @@
 module.exports = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}'
+    './src/lib/**/*.{ts,tsx}',
+    './src/app/**/*.{ts,tsx}'
   ],
   theme: {
     container: {
@@ -17,7 +15,8 @@ module.exports = {
     },
     extend: {
       screens: {
-        xs: '430px'
+        xs: '430px',
+        ml: '900px'
       },
       colors: {
         border: 'rgb(var(--border))',
@@ -27,12 +26,12 @@ module.exports = {
         foreground: 'rgb(var(--foreground))',
         'lighter-background': 'rgb(var(--lighter-background))',
         'lighter-foreground': 'rgb(var(--lighter-foreground))',
+        'base-background': 'rgb(var(--base-background))',
+        'base-foreground': 'rgb(var(--base-foreground))',
         primary: 'rgb(var(--primary))',
         'primary-foreground': 'rgb(var(--primary-foreground))',
-        secondary: {
-          DEFAULT: 'rgb(var(--secondary))',
-          foreground: 'rgb(var(--secondary-foreground))'
-        },
+        secondary: 'rgb(var(--secondary))',
+        'secondary-foreground': 'rgb(var(--secondary-foreground))',
         destructive: {
           DEFAULT: 'rgb(var(--destructive))',
           foreground: 'rgb(var(--destructive-foreground))'
