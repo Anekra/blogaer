@@ -1,18 +1,22 @@
-'use server'
-import { auth, signOut } from '@/lib/auth';
+'use server';
+import { cookies } from 'next/headers';
 
-export default async function logout() {
+export default async function logout(): Promise<boolean> {
+  const accessCookieName = `${process.env.ACCESS_TOKEN}`;
+  const refreshCookieName = `${process.env.REFRESH_TOKEN}`;
   const url: string = `${process.env.API_ROUTE}/logout`;
-  const session = await auth()
-
-  const logoutResponse = await fetch(url, {
-    headers: {
-      Origin: 'http://localhost:3000',
-      Cookie: `jwt=${session?.user.refresh}` 
-    }
-  });
-
-  if (!logoutResponse.ok) throw new Error('Logout failed');
-
-  return await signOut({ redirect: true, redirectTo: '/' });
+  const refreshToken = cookies().get(refreshCookieName)?.value;
+  cookies().delete(accessCookieName);
+  cookies().delete(refreshCookieName);
+  try {
+    await fetch(url, {
+      headers: {
+        Origin: 'http://localhost:3000',
+        Cookie: `${process.env.REFRESH_TOKEN}=${refreshToken}`
+      } 
+    });
+    return true;
+  } catch (error) {
+    return false
+  }
 }

@@ -1,12 +1,12 @@
-import { SlateEditor } from '../types';
+import { SlateEditor } from '../types/common';
 import { RenderElementProps, RenderLeafProps } from 'slate-react';
-import { WysiwygStyle, WysiwygType } from '../enums';
-import CodeEditor from '../components/CodeEditor';
+import { WysiwygStyle, WysiwygType } from '../utils/enums';
+import PostCodeEditor from '../components/post/PostCodeEditor';
 import React from 'react';
-import Divider from '../components/Divider';
-import PostImage from '../components/PostImage';
-import Quote from '../components/Quote';
-import PostLink from '../components/PostLink';
+import PostDivider from '../components/post/PostDivider';
+import PostImage from '../components/post/PostImage';
+import PostQuote from '../components/post/PostQuote';
+import PostLink from '../components/post/PostLink';
 
 export default function useEditorConfig(editor: SlateEditor) {
   const { isVoid } = editor;
@@ -38,12 +38,12 @@ function renderElement(props: RenderElementProps) {
     case WysiwygType.Code:
       return (
         <code {...attributes} contentEditable={false}>
-          <CodeEditor element={element} />
+          <PostCodeEditor element={element} />
           <span className="hidden">{children}</span>
         </code>
       );
     case WysiwygType.Quote:
-      return <Quote props={props} text={text} />;
+      return <PostQuote props={props} text={text} />;
     case WysiwygType.List:
       return (
         <li {...attributes} className={`${!text ? 'ph relative' : ''}`}>
@@ -65,7 +65,7 @@ function renderElement(props: RenderElementProps) {
     case WysiwygType.Image:
       return <PostImage element={element}>{children}</PostImage>;
     case WysiwygType.Divider:
-      return <Divider element={element}>{children}</Divider>;
+      return <PostDivider>{children}</PostDivider>;
     case WysiwygStyle.Link:
       return <PostLink props={props} />;
     default:

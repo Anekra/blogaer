@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { SlateEditor } from '../types';
+import { SlateEditor } from '../types/common';
 import { Transforms } from 'slate';
-import { WysiwygType } from '../enums';
+import { WysiwygType } from '../utils/enums';
 import { convertFileToBase64 } from '../utils/helper';
 
 export default function useImageUpload(editor: SlateEditor) {

@@ -1,4 +1,4 @@
-import PostPreview from '@/lib/components/PostPreview';
+import PostPreview from '@/lib/components/post/PostPreview';
 import React from 'react';
 
 export default function PreviewPostPage() {

@@ -1,10 +1,15 @@
-import Footer from "@/lib/components/Footer";
-import Navbar from "@/lib/components/Navbar";
-import SideBar from "@/lib/components/SideBar";
-import { SideBarProvider } from "@/lib/contexts/SideBarContext";
-import React from "react";
+import Footer from '@/lib/components/navs/footer/Footer';
+import Navbar from '@/lib/components/navs/header/Navbar';
+import SideBar from '@/lib/components/navs/sidebar/SideBar';
+import { SideBarProvider } from '@/lib/contexts/SideBarContext';
+import React from 'react';
 
-export default async function ExploreLayout({ children }: { children: React.ReactNode;}) {
+export default async function ExploreLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
+
   return (
     <div className="relative flex min-h-screen">
       <Navbar />

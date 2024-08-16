@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Dispatch,
   ReactNode,
@@ -9,19 +8,19 @@ import {
   useMemo,
   useState
 } from 'react';
-import { Descendant } from 'slate';
-import { INITIAL_VALUE } from '../constants';
+import { INITIAL_VALUE } from '../utils/constants';
+import { CustomElement } from '../slate';
 
 type ContentContextType = [
-  Descendant[],
-  Dispatch<SetStateAction<Descendant[]>>
+  CustomElement[],
+  Dispatch<SetStateAction<CustomElement[]>>
 ];
 
 const ContentContext = createContext<ContentContextType>([[], () => {}]);
 
 export const ContentProvider = ({ children }: { children: ReactNode }) => {
   const initialValue = useMemo(() => INITIAL_VALUE, []);
-  const [content, setContent] = useState<Descendant[]>(initialValue);
+  const [content, setContent] = useState<CustomElement[]>(initialValue);
 
   return (
     <ContentContext.Provider value={[content, setContent]}>

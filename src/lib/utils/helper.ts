@@ -1,9 +1,9 @@
-import { Editor, Element, Node, Path, Range, Transforms } from 'slate';
-import { SlateEditor } from '../types';
+import { BaseSelection, Editor, Element, Path, Range, Transforms } from 'slate';
+import { SlateEditor } from '../types/common';
 import { CustomElement } from '../slate';
-import { HeadingSize, WysiwygAlign, WysiwygStyle, WysiwygType } from '../enums';
+import { HeadingSize, WysiwygAlign, WysiwygStyle, WysiwygType } from './enums';
 import { ReactEditor } from 'slate-react';
-import { LIST_TYPES, NOT_ALIGNABLE, PATH_TYPES } from '../constants';
+import { LIST_TYPES, UNALIGNABLE, PATH_TYPES } from './constants';
 
 export function addElement(editor: SlateEditor, element: CustomElement) {
   Transforms.insertNodes(editor, element);
@@ -82,10 +82,9 @@ export function getLinkElement(editor: SlateEditor) {
   return linkElement;
 }
 
-export function getPath(editor: SlateEditor, node: Node) {
-  const { selection } = editor;
-  if (!selection) return;
-  return ReactEditor.findPath(editor, node);
+export function getPath(editor: SlateEditor, location: BaseSelection) {
+  if (!location) return;
+  return Editor.path(editor, location);
 }
 
 export function setCodeElement(editor: SlateEditor, value: string) {
@@ -158,7 +157,7 @@ export function toggleType(
     Transforms.unsetNodes(editor, 'path');
   }
 
-  if (NOT_ALIGNABLE.includes(type)) {
+  if (UNALIGNABLE.includes(type)) {
     Transforms.unsetNodes(editor, 'align');
   }
 
@@ -216,6 +215,12 @@ export function isLinkSelected(editor: SlateEditor) {
   );
 }
 
+export function isFirstElement(editor: SlateEditor) {
+  const { selection } = editor;
+  if (!selection) return;
+  return getPath(editor, selection)?.toString() === [0, 0].toString();
+}
+
 export function collapseSelection(editor: SlateEditor) {
   Transforms.collapse(editor);
 }
@@ -245,4 +250,8 @@ export function getLastPathName(path: string) {
   const parts = path.split('/');
   const lastName = parts[parts.length - 1];
   return lastName.charAt(0).toUpperCase() + lastName.slice(1);
+}
+
+export function getFingerprint() {
+
 }

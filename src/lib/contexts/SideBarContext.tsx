@@ -1,13 +1,13 @@
 'use client'
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const SideBarContext = createContext({
-  isCollapsed: false,
+  isCollapsed: true,
   toggleSideBar: () => {}
 });
 
-function SideBarProvider({ children }: { children: React.ReactNode }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export function SideBarProvider({ children }: { children: React.ReactNode }) {
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   useEffect(() => {
     const storedValue = localStorage.getItem('sidebar');
@@ -26,4 +26,4 @@ function SideBarProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export { SideBarContext, SideBarProvider };
+export const useSideBar = () => useContext(SideBarContext);
