@@ -1,18 +1,16 @@
-import { auth } from '@/lib/auth';
-import Navbar from '@/lib/components/Navbar';
+import Navbar from '@/lib/components/navs/header/Navbar';
 import { ContentProvider } from '@/lib/contexts/ContentContext';
 import React from 'react';
 
-export default async function BlogLayout({
+export default async function PostNoSBLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
   return (
     <div className="min-h-screen">
       <ContentProvider>
-        <Navbar user={session?.user} />
+        <Navbar />
         {children}
       </ContentProvider>
     </div>

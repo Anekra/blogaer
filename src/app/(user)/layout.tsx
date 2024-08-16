@@ -1,7 +1,6 @@
-import { auth } from '@/lib/auth';
-import Footer from '@/lib/components/Footer';
-import Navbar from '@/lib/components/Navbar';
-import SideBar from '@/lib/components/SideBar';
+import Footer from '@/lib/components/navs/footer/Footer';
+import Navbar from '@/lib/components/navs/header/Navbar';
+import SideBar from '@/lib/components/navs/sidebar/SideBar';
 import { SideBarProvider } from '@/lib/contexts/SideBarContext';
 import React from 'react';
 
@@ -10,14 +9,12 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
   return (
     <div className="relative flex min-h-screen w-full flex-col">
-      <Navbar user={session?.user} />
+      <Navbar />
       <div className="flex">
         <SideBarProvider>
-          <SideBar user={session?.user} />
+          <SideBar />
         </SideBarProvider>
         {children}
       </div>
