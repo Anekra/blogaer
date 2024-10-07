@@ -6,12 +6,12 @@ import {
   DialogTrigger,
   DialogClose
 } from '@/lib/components/ui/dialog';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import { DropdownMenuItem } from '@/lib/components/ui/dropdown-menu';
 import logout from '@/lib/actions/logout';
 import { useSession } from '@/lib/contexts/SessionContext';
 import { toast } from '@/lib/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { LogOutIcon } from 'lucide-react';
 
 export default function LogoutDialog() {
   const router = useRouter();
@@ -37,16 +37,13 @@ export default function LogoutDialog() {
   };
   return (
     <Dialog>
-      <DialogTrigger
-        asChild
-        className="bg-transparent p-2 focus:bg-transparent"
-      >
+      <DialogTrigger asChild>
         <DropdownMenuItem
-          className="flex w-full justify-between"
+          className="flex w-full justify-between p-2 transition-none"
           onSelect={(e) => e.preventDefault()}
         >
           Log out
-          <Icon icon="tabler:logout" className="text-xl" />
+          <LogOutIcon className="text-xl" />
         </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="flex w-fit flex-col gap-8 px-12 py-10">

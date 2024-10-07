@@ -9,7 +9,7 @@ import {
 } from 'slate-react';
 import { Descendant, createEditor } from 'slate';
 import { WysiwygType } from '../../utils/enums';
-import { CustomElement } from '../../slate';
+import { CustomElement } from '../../types/slate';
 export default function FullPreviewDialog({
   content,
   renderElement,

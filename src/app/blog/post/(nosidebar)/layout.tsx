@@ -8,11 +8,9 @@ export default async function PostNoSBLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen">
-      <ContentProvider>
-        <Navbar />
-        {children}
-      </ContentProvider>
-    </div>
+    <ContentProvider>
+      <Navbar />
+      <main className="flex justify-between gap-6 pb-6 pt-8">{children}</main>
+    </ContentProvider>
   );
 }

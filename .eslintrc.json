@@ -10,5 +10,13 @@
     },
     "rules": {
         "no-unused-vars": "off"
+    },
+    "settings": {
+    "tailwindcss": {
+      "callees": ["cn"]
+    },
+    "next": {
+      "rootDir": ["@"]
     }
+  }
 }

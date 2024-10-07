@@ -5,7 +5,7 @@ import LogoIcon from '@/lib/components/icons/LogoIcon';
 export default async function Login() {
   return (
     <main className="radial-background relative flex min-h-screen items-center justify-center py-6">
-      <BackBtn className="md:text-5xl" />
+      <BackBtn className="absolute left-0 top-0 m-6 [&>*:first-child]:md:text-5xl" />
       <div className="absolute">
         <LogoIcon className="h-[150px] w-[180px] text-primary-foreground brightness-75" />
       </div>

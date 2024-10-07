@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { NodeEntry, Editor, Node, Range } from 'slate';
 import { WysiwygStyle } from '../../utils/enums';
-import { CustomElement } from '../../slate';
+import { CustomElement } from '../../types/slate';
 import { useSlate } from 'slate-react';
 import isUrl from 'is-url';
 import { toggleLink } from '../../utils/helper';
@@ -36,9 +36,6 @@ export default function PostLinkEditor({
     [setLink]
   );
   const onApply = () => {
-    const { selection } = editor;
-    if (selection === null) return;
-
     toggleLink(editor, link);
     handleShowLinkEditor(false);
   };
@@ -67,7 +64,7 @@ export default function PostLinkEditor({
       const linkDivElLeft =
         rect.left + window.scrollX - linkDivEl.offsetWidth / 2 + rect.width / 2;
       const linkDivElTop =
-        rect.top + window.scrollY - linkDivEl.offsetHeight - 50;
+        rect.top + window.scrollY - linkDivEl.offsetHeight - 6;
       if (!linkParentElBoundaries) return;
 
       linkDivEl.style.zIndex = '3';
@@ -105,8 +102,8 @@ export default function PostLinkEditor({
         ref={linkDivRef}
         className="absolute z-0 mb-5 rounded bg-accent text-sm opacity-0 brightness-200"
         onBlur={(e) => {
-          setLink('');
           if (!e.currentTarget.contains(e.relatedTarget)) {
+            setLink('');
             handleShowLinkEditor(false);
           }
         }}
@@ -120,9 +117,10 @@ export default function PostLinkEditor({
         >
           <input
             ref={linkInputRef}
+            value={link || ''}
             name="url"
             type="text"
-            className="rounded bg-base-background p-1 outline-none placeholder:text-foreground/20"
+            className="rounded bg-base-background p-2 outline-none placeholder:text-foreground/20"
             placeholder="Enter link url"
             onChange={onInputLinkChanged}
           />
@@ -138,11 +136,11 @@ export default function PostLinkEditor({
             )}
             <button
               type="submit"
-              className={`${
+              className={`flex h-6 w-6 items-center justify-center rounded-3xl text-2xl${
                 isUrl(link)
-                  ? 'text-green-500 hover:bg-green-500 hover:text-background hover:brightness-100'
-                  : 'dark:text-foreground/40'
-              } flex h-6 w-6 items-center justify-center rounded-3xl text-2xl`}
+                  ? ' text-green-500 hover:bg-green-500 hover:text-background hover:brightness-100'
+                  : ' text-muted'
+              }`}
               onMouseEnter={() => {
                 if (!isUrl(link)) {
                   setShowLinkTooltip(true);

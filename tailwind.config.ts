@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
-  content: [
-    './src/lib/**/*.{ts,tsx}',
-    './src/app/**/*.{ts,tsx}'
-  ],
+  content: ['./src/lib/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}'],
   theme: {
     container: {
       center: true,
@@ -16,7 +13,9 @@ module.exports = {
     extend: {
       screens: {
         xs: '430px',
-        ml: '900px'
+        ms: '700px',
+        ml: '900px',
+        ql: '1100px'
       },
       colors: {
         border: 'rgb(var(--border))',
@@ -24,14 +23,14 @@ module.exports = {
         ring: 'rgb(var(--ring))',
         background: 'rgb(var(--background))',
         foreground: 'rgb(var(--foreground))',
-        'lighter-background': 'rgb(var(--lighter-background))',
-        'lighter-foreground': 'rgb(var(--lighter-foreground))',
         'base-background': 'rgb(var(--base-background))',
         'base-foreground': 'rgb(var(--base-foreground))',
         primary: 'rgb(var(--primary))',
         'primary-foreground': 'rgb(var(--primary-foreground))',
         secondary: 'rgb(var(--secondary))',
         'secondary-foreground': 'rgb(var(--secondary-foreground))',
+        'darker-secondary-foreground':
+          'rgb(var(--darker-secondary-foreground))',
         destructive: {
           DEFAULT: 'rgb(var(--destructive))',
           foreground: 'rgb(var(--destructive-foreground))'

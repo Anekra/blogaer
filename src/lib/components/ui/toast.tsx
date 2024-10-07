@@ -77,7 +77,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      'absolute right-2 inset-y-0 rounded-md p-1 text-background/50 opacity-0 transition-opacity hover:text-background focus:outline-none group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50',
+      'absolute inset-y-0 right-2 rounded-md p-1 text-background/50 opacity-0 transition-opacity hover:text-background focus:outline-none group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50',
       className
     )}
     toast-close=""
@@ -94,7 +94,7 @@ const ToastTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
     ref={ref}
-    className={cn('text-sm font-semibold', className)}
+    className={cn('font-semibold', className)}
     {...props}
   />
 ));

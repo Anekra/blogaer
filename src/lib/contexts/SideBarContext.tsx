@@ -1,5 +1,6 @@
-'use client'
+'use client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useSession } from './SessionContext';
 
 const SideBarContext = createContext({
   isCollapsed: true,
@@ -8,6 +9,7 @@ const SideBarContext = createContext({
 
 export function SideBarProvider({ children }: { children: React.ReactNode }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const { session } = useSession();
 
   useEffect(() => {
     const storedValue = localStorage.getItem('sidebar');
@@ -18,6 +20,8 @@ export function SideBarProvider({ children }: { children: React.ReactNode }) {
   }, [isCollapsed]);
 
   const toggleSideBar = () => setIsCollapsed(!isCollapsed);
+
+  if (!session) return;
 
   return (
     <SideBarContext.Provider value={{ isCollapsed, toggleSideBar }}>

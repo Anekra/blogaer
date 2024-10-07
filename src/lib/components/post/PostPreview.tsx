@@ -3,14 +3,14 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { createEditor } from 'slate';
 import { Editable, Slate, withReact } from 'slate-react';
 import { WysiwygType } from '@/lib/utils/enums';
-import { CustomElement } from '@/lib/slate';
+import { CustomElement } from '@/lib/types/slate';
 import { useContent } from '@/lib/contexts/ContentContext';
 import useViewConfig from '@/lib/hooks/useViewConfig';
 
 export default function PostPreview() {
   const editor = useMemo(() => withReact(createEditor()), []);
   const [isMounted, setIsMounted] = useState(false);
-  const [content, setContent] = useContent();
+  const { content, setContent } = useContent();
   const { renderElement, renderLeaf } = useViewConfig(editor);
 
   useEffect(() => {
@@ -25,19 +25,19 @@ export default function PostPreview() {
 
   if (isMounted) {
     return (
-      <div className="flex w-full gap-6">
-        <aside className="w-3/12"></aside>
+      <div className="flex w-full gap-4">
+        <aside className="w-2/12"></aside>
         <article className="w-full">
           <Slate editor={editor} initialValue={content}>
             <Editable
               readOnly
-              renderElement={renderElement}
+              renderElement={(props) => renderElement(props, editor)}
               renderLeaf={renderLeaf}
               className="pointer-events-none flex w-full max-w-[65vw] flex-col gap-2 self-center"
             />
           </Slate>
         </article>
-        <aside className="w-3/12 pe-4 pt-8">
+        <aside className="w-3/12 pe-4 pt-8 text-sm">
           <ul>
             {content
               .filter((n) => n.type === WysiwygType.Heading)

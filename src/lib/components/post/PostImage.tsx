@@ -1,61 +1,51 @@
-import React, { useRef } from 'react';
-import { CustomElement } from '../../slate';
+import React from 'react';
 import { Input } from '../ui/input';
-import { getPath, selectElement, setImageCaption } from '../../utils/helper';
-import { useSlate } from 'slate-react';
+import { getElement, setImageCaption } from '../../utils/helper';
+import { RenderElementProps, useSlate } from 'slate-react';
 import Image from 'next/image';
 
 export default function PostImage({
-  element,
-  children,
+  props: { attributes, element, children },
   viewOnly
 }: {
-  element: CustomElement;
-  children: any;
+  props: RenderElementProps;
   viewOnly?: boolean;
 }) {
-  const frameRef = useRef<HTMLPictureElement>(null);
   const editor = useSlate();
-  const img = element.imageBase64;
-  if (!img) return;
-  const path = getPath(editor, editor.selection);
-  const isSelected =
-    !!path && editor.selection?.anchor.path.slice(0, 1).join() === path?.join();
-  const imgHeight = element.imageHeight < 300 ? element.imageHeight : 300;
-  const imgWidth =
-    element.imageHeight <= 300
-      ? element.imageWidth
-      : (element.imageWidth / element.imageHeight) * 300;
+  // const img = element.imageBase64;
+  const currentElement = getElement(editor);
+  const isSelected = element === currentElement;
 
   return (
     <figure
-      ref={frameRef}
+      {...attributes}
       className={`${
         isSelected && !viewOnly
           ? 'rounded border border-dashed border-primary-foreground'
           : ''
-      } flex w-full flex-col items-center justify-center gap-2 p-2`}
-      onMouseDown={(e) => {
-        e.preventDefault();
-        if (path) selectElement(editor, path);
-      }}
+      } flex w-full select-none flex-col items-center justify-center gap-2 p-2`}
       contentEditable={false}
     >
       <Image
-        src={img}
-        alt={
-          element.imageCaption || (element.imageName as string).split('.')[0]
-        }
-        width={imgWidth}
-        height={imgHeight}
+        src={element.imageLink}
+        className="w-full max-w-[650px]"
+        alt={element.imageAlt}
+        width={400}
+        height={300}
+        unoptimized
       />
       {!viewOnly && (
         <Input
           type="text"
+          value={element.imageCaption}
           placeholder="Add caption (optional)"
           maxLength={27}
           className="mt-2 w-[240px]"
           onChange={(e) => setImageCaption(editor, e.target.value)}
+          onKeyDown={(e) => {
+            e.preventDefault();
+            if (e.key.match('Enter')) e.currentTarget.blur();
+          }}
         />
       )}
       <span className="hidden">{children}</span>

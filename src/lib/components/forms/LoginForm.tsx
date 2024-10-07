@@ -18,8 +18,11 @@ import GoogleLoginBtn from '@/lib/components/buttons/GoogleLoginBtn';
 import { useToast } from '@/lib/components/ui/use-toast';
 import { useLoading } from '@/lib/contexts/LoadingContext';
 import LoadingSpinner from '@/lib/components/icons/LoadingSpinner';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getBrowserFingerprint } from 'fingerprint-browser';
+import { useSession } from '@/lib/contexts/SessionContext';
+import jwt from 'jsonwebtoken';
+import { Session } from '@/lib/types/common';
 
 type FormValues = {
   emailOrUsername: string;
@@ -28,8 +31,10 @@ type FormValues = {
 
 export default function LoginForm() {
   const { isLoading, setLoading } = useLoading();
+  const { setSession } = useSession();
   const router = useRouter();
   const { toast } = useToast();
+  const redirectUrl = useSearchParams().get('redirect_url');
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
@@ -43,7 +48,10 @@ export default function LoginForm() {
     const response = await login({ ...values, clientId });
     if (response.data) {
       localStorage.setItem(`${process.env.NEXT_PUBLIC_SESSION}`, response.data);
-      router.push('/home');
+      const session = jwt.decode(response.data) as Session;
+      setSession(session);
+      if (redirectUrl) router.replace(redirectUrl);
+      else router.replace('/home');
       toast({
         title: 'Login successful.',
         duration: 3000,
@@ -141,7 +149,7 @@ export default function LoginForm() {
           />
           <button
             type="submit"
-            className="mt-6 flex w-full justify-center gap-4 rounded-md bg-primary-foreground py-2 font-bold text-primary hover:shadow-[0_2px_4px_0_rgb(0,0,0,0.9)] active:translate-y-[4px] active:shadow-none dark:hover:shadow-[0_2px_4px_0_rgb(255,255,255,0.9)] dark:hover:active:shadow-none"
+            className="btn-solid-p mt-6 flex justify-center"
           >
             Login
             {isLoading && <LoadingSpinner />}

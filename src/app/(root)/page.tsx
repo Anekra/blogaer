@@ -1,13 +1,13 @@
 import CategoryIcon from '@/lib/components/icons/CategoryIcon';
 import StoriesIcon from '@/lib/components/icons/StoriesIcon';
-import PostItemsHolderA from '@/lib/components/post/PostItemsHolderA';
+import PostCardsHolderA from '@/lib/components/post/PostCardsHolderA';
 import { CATEGORIES } from '@/lib/utils/constants';
 import { Link } from 'next-view-transitions';
 
 export default function RootPage() {
   return (
-    <main className="flex flex-col pb-8">
-      <section className="gradient-background flex w-full flex-col items-center justify-between px-6 pt-20 xs:px-10 sm:flex-row sm:gap-6 sm:px-12 xl:px-24">
+    <main className="gradient-background flex flex-col pb-8">
+      <section className="flex w-full flex-col items-center justify-between px-6 pt-20 xs:px-10 sm:flex-row sm:gap-6 sm:px-12 xl:px-24">
         <div className="order-2 flex flex-col gap-3 py-4 sm:order-1 sm:gap-6 sm:py-16 xl:w-[500px]">
           <h1 className="pb-3 text-4xl font-bold xl:text-5xl">
             Exploring Thoughts
@@ -17,17 +17,22 @@ export default function RootPage() {
             knowledge. Please Explore, Share and Enjoy your time here.
           </p>
           <Link href="/blog/explore" className="w-fit">
-            <button className="btn-p-solid-b">EXPLORE</button>
+            <button className="btn-solid-root">
+              <span>EXPLORE</span>
+            </button>
           </Link>
         </div>
         <div className="order-1 grow sm:order-2"></div>
       </section>
-      <section className="flex flex-col gap-6 px-6 pt-10 xs:px-10 sm:px-12 xl:px-24">
+      <section
+        id="recent-posts"
+        className="glass-container my-6 flex flex-col gap-6 p-6 xs:m-6 md:m-8 md:p-8 lg:m-12 lg:p-12"
+      >
         <div className="flex items-center gap-6">
           <StoriesIcon />
           <h1 className="text-3xl">Recent</h1>
         </div>
-        <PostItemsHolderA />
+        <PostCardsHolderA />
       </section>
       <section className="flex flex-col gap-8 px-6 py-10 xs:px-10 sm:items-center sm:px-12 xl:px-24">
         <div className="flex items-center gap-2">

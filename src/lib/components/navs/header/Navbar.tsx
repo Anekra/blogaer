@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false);
   const [prevY, setPrevY] = useState(0);
   const currentPath = usePathname().toLowerCase();
+  const isRootPath = currentPath === '/';
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -27,13 +28,13 @@ export default function Navbar() {
   if (isMounted) {
     return (
       <header
-        className={`${
-          isScrollingDown ? '-translate-y-full' : 'translate-y-0'
-        } ${
-          window.scrollY === 0 && currentPath === '/'
+        className={`top-0 z-[8] flex w-screen items-center justify-between gap-6 px-6 py-2 transition-transform duration-500${
+          isRootPath ? ' fixed' : ' sticky'
+        }${isScrollingDown ? ' -translate-y-full' : ' translate-y-0'}${
+          window.scrollY === 0 && isRootPath
             ? ''
-            : 'bg-background shadow-[0_1px_1px_0_rgb(var(--foreground)/0.2)]'
-        } fixed top-0 z-[8] flex w-screen items-center justify-between gap-4 px-6 py-2 transition-transform duration-500`}
+            : ' bg-background shadow-[0_1px_1px_0_rgb(var(--foreground)/0.2)]'
+        }`}
       >
         <div className="flex gap-4">
           <button className="flex items-center rounded active:bg-secondary md:hidden">
@@ -43,10 +44,10 @@ export default function Navbar() {
             />
           </button>
           <Link href="/">
-            <LogoIcon />
+            <LogoIcon isAtTheTop={prevY === 0 && isRootPath} />
           </Link>
         </div>
-        <NavItems />
+        <NavItems isAtTheTop={prevY === 0 && isRootPath} />
       </header>
     );
   }

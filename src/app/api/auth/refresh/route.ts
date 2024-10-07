@@ -1,20 +1,32 @@
 import { RefreshTokenJson, Session } from '@/lib/types/common';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import { redirect } from 'next/navigation';
 
-export async function POST(request: NextRequest) {
-  const refreshCookieName = `${process.env.REFRESH_TOKEN}`;
+export async function GET(request: NextRequest) {
+  console.log('#############refresh token start');
   const accessCookieName = `${process.env.ACCESS_TOKEN}`;
+  const refreshCookieName = `${process.env.REFRESH_TOKEN}`;
+  const sessionToken = request.nextUrl.searchParams.get('session');
+  if (!sessionToken) {
+    return NextResponse.json(
+      { error: 'Session expired.' },
+      { status: 419 }
+    );
+  }
+
   const refreshToken = request.cookies.get(refreshCookieName)?.value;
-  const sessionToken = await request.text();
+  if (!refreshToken) {
+    return NextResponse.json(
+      { error: 'Session token expired.' },
+      { status: 419 }
+    );
+  }
+
   const decodedSession = jwt.decode(sessionToken) as Session;
   const stripedSession = { ...decodedSession };
-  delete stripedSession.exp;
-  const encryptedData = jwt.sign(
-    stripedSession,
-    `${process.env.SESSION}`,
-    { expiresIn: '10m' }
-  );
+  stripedSession.exp = Date.now() / 1000 + 1 * 10 * 60;
+  const encryptedData = jwt.sign(stripedSession, `${process.env.SESSION}`);
   const response = NextResponse.json(
     { session: encryptedData },
     { status: 200 }
@@ -33,12 +45,9 @@ export async function POST(request: NextRequest) {
     if (!refreshResponse.ok) {
       response.cookies.delete(accessCookieName);
       response.cookies.delete(refreshCookieName);
-      return NextResponse.json(
-        { error: refreshJson.message },
-        { status: refreshResponse.status }
-      );
+
+      return redirect('/login?redirect=Session expired.');
     }
-    console.log('json >>>', refreshJson);
     const isSecure = process.env.NODE_ENV === 'production';
     // access
     response.cookies.set(
@@ -68,15 +77,16 @@ export async function POST(request: NextRequest) {
             maxAge: 24 * 60 * 60
           }
         : {
-          httpOnly: true,
-          maxAge: 24 * 60 * 60
+            httpOnly: true,
+            maxAge: 24 * 60 * 60
           }
     );
-    
+
     return response;
   } catch (error) {
     response.cookies.delete(accessCookieName);
     response.cookies.delete(refreshCookieName);
-    return NextResponse.error();
+
+    return redirect('/login?redirect=Session expired.');
   }
 }

@@ -1,12 +1,25 @@
-import { BaseSelection, Editor, Element, Path, Range, Transforms } from 'slate';
+import {
+  BaseSelection,
+  Editor,
+  Element,
+  Path,
+  Range,
+  Transforms,
+  Node
+} from 'slate';
 import { SlateEditor } from '../types/common';
-import { CustomElement } from '../slate';
+import { CustomElement } from '../types/slate';
 import { HeadingSize, WysiwygAlign, WysiwygStyle, WysiwygType } from './enums';
 import { ReactEditor } from 'slate-react';
-import { LIST_TYPES, UNALIGNABLE, PATH_TYPES } from './constants';
+import { LIST_TYPES, VOIDS } from './constants';
+import { nanoid } from 'nanoid';
 
 export function addElement(editor: SlateEditor, element: CustomElement) {
-  Transforms.insertNodes(editor, element);
+  focusEditor(editor);
+  const { selection } = editor;
+  if (!selection || !selection.anchor) return;
+  const nextPoint = editor.after(selection, { distance: 1, unit: 'line' });
+  Transforms.insertNodes(editor, element, { at: nextPoint, select: true });
 }
 
 export function addParagraph(editor: SlateEditor) {
@@ -18,41 +31,39 @@ export function addParagraph(editor: SlateEditor) {
   focusEditor(editor);
 }
 
-export function addLink(
-  editor: SlateEditor,
-  isCollapsed: boolean,
-  linkUrl: string = '',
-  linkText: string = 'link'
-) {
-  if (isCollapsed) {
-    addElement(editor, {
-      type: WysiwygStyle.Link,
-      children: [{ text: linkText }],
-      url: linkUrl
-    });
-  } else {
-    Transforms.wrapNodes(
-      editor,
-      {
-        type: WysiwygStyle.Link,
-        children: [{ text: linkText.trim() }],
-        url: linkUrl
-      },
-      { split: true }
-    );
-  }
+export function addCodeEditor(editor: SlateEditor) {
+  addElement(editor, {
+    type: WysiwygType.Code,
+    children: [{ text: '' }]
+  });
+  focusEditor(editor);
+}
+
+export function addImageHolder(editor: SlateEditor) {
+  addElement(editor, {
+    type: WysiwygType.ImagePicker,
+    children: [{ text: '' }]
+  });
+  focusEditor(editor);
+}
+
+export function addDivider(editor: SlateEditor) {
+  addElement(editor, {
+    type: WysiwygType.Divider,
+    children: [{ text: '' }]
+  });
+  focusEditor(editor);
 }
 
 export function removeElement(editor: SlateEditor) {
-  const { selection } = editor;
-  if (!selection) return;
+  focusEditor(editor);
   Transforms.removeNodes(editor);
 }
 
-export function getElement(editor: SlateEditor): CustomElement | undefined {
+export function getElement(editor: SlateEditor) {
   const { selection } = editor;
-  if (!selection) return;
-  const element = editor.children[selection.focus.path[0]];
+  if (!selection || !selection.anchor) return;
+  const element = editor.children[selection.anchor.path[0]];
   return element as CustomElement;
 }
 
@@ -78,13 +89,21 @@ export function getLinkElement(editor: SlateEditor) {
   const linkElement = Editor.above(editor, {
     match: (n) => (n as CustomElement).type === WysiwygStyle.Link
   });
-
   return linkElement;
 }
 
 export function getPath(editor: SlateEditor, location: BaseSelection) {
   if (!location) return;
   return Editor.path(editor, location);
+}
+
+export function findPath(editor: SlateEditor, node: any) {
+  if (!node) return;
+  return ReactEditor.findPath(editor, node);
+}
+
+export function focusEditor(editor: SlateEditor) {
+  ReactEditor.focus(editor);
 }
 
 export function setCodeElement(editor: SlateEditor, value: string) {
@@ -95,6 +114,22 @@ export function setCodeElement(editor: SlateEditor, value: string) {
     type: WysiwygType.Code,
     code: value
   });
+}
+
+export function setImageElement(
+  editor: SlateEditor,
+  link: string,
+  caption: string,
+  alt: string
+) {
+  Transforms.setNodes(editor, {
+    type: WysiwygType.Image,
+    children: [{ text: '' }],
+    imageLink: link,
+    imageCaption: caption,
+    imageAlt: alt
+  });
+  focusEditor(editor);
 }
 
 export function setImageCaption(editor: SlateEditor, caption: string) {
@@ -153,11 +188,7 @@ export function toggleType(
     Transforms.unsetNodes(editor, 'code');
   }
 
-  if ('path' in element && !PATH_TYPES.includes(type)) {
-    Transforms.unsetNodes(editor, 'path');
-  }
-
-  if (UNALIGNABLE.includes(type)) {
+  if (VOIDS.includes(type)) {
     Transforms.unsetNodes(editor, 'align');
   }
 
@@ -189,10 +220,22 @@ export function toggleLink(editor: SlateEditor, linkUrl?: string) {
   } else {
     const isSelectionCollapsed = Range.isCollapsed(selection);
 
-    if (isSelectionCollapsed) addLink(editor, true, linkUrl);
-    else {
-      const linkText = getElement(editor)?.children[0].text;
-      addLink(editor, false, linkUrl, linkText);
+    if (isSelectionCollapsed) {
+      addElement(editor, {
+        type: WysiwygStyle.Link,
+        children: [{ text: 'link' }],
+        url: linkUrl
+      });
+    } else {
+      Transforms.wrapNodes(
+        editor,
+        {
+          type: WysiwygStyle.Link,
+          children: [{ text: '' }],
+          url: linkUrl
+        },
+        { split: true, at: selection }
+      );
     }
   }
 
@@ -225,12 +268,29 @@ export function collapseSelection(editor: SlateEditor) {
   Transforms.collapse(editor);
 }
 
-export function focusEditor(editor: SlateEditor) {
-  ReactEditor.focus(editor);
-}
-
 export function getHeadingSizeKey(value: HeadingSize): string {
   return Object.keys(HeadingSize)[Object.values(HeadingSize).indexOf(value)];
+}
+
+export function getTotalWords(content: CustomElement[]) {
+  return content
+    .map((n) => {
+      return Node.string(n).split(/\s+/).length;
+    })
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    .toLocaleString();
+}
+
+export function newUrl(
+  url: string,
+  searchParams: { param: string; value: string }[],
+  base?: string | URL
+) {
+  const newUrl = new URL(url, base);
+  searchParams.forEach(({ param, value }) => {
+    newUrl.searchParams.set(param, value);
+  });
+  return newUrl;
 }
 
 export function convertFileToBase64(file: File) {
@@ -246,12 +306,12 @@ export function convertFileToBase64(file: File) {
   });
 }
 
-export function getLastPathName(path: string) {
+export function getSlugOrIdFromPath(path: string) {
   const parts = path.split('/');
   const lastName = parts[parts.length - 1];
-  return lastName.charAt(0).toUpperCase() + lastName.slice(1);
+  return lastName;
 }
 
-export function getFingerprint() {
-
+export function generateId() {
+  return nanoid(16).replaceAll('-', '~');
 }

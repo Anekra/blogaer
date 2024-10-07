@@ -7,6 +7,7 @@ export enum WysiwygType {
   ListBullets = 'bullets',
   ListNumbers = 'numbers',
   Image = 'image',
+  ImagePicker = 'imagePicker',
   Divider = 'divider'
 }
 
@@ -26,9 +27,10 @@ export enum WysiwygStyle {
 }
 
 export enum HeadingSize {
-  H3 = 'text-2xl',
-  H2 = 'text-3xl',
-  H1 = 'text-5xl'
+  H3 = 'text-xl',
+  H2 = 'text-2xl',
+  H1 = 'text-3xl',
+  H = 'text-5xl'
 }
 
 export enum HotKeys {

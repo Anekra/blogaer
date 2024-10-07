@@ -8,40 +8,36 @@ import PostImage from '../components/post/PostImage';
 import PostQuote from '../components/post/PostQuote';
 import PostLink from '../components/post/PostLink';
 import PostTittle from '../components/post/PostTittle';
+import { VOIDS } from '../utils/constants';
+import PostHeading from '../components/post/PostHeading';
 
 export default function useViewConfig(editor: SlateEditor) {
   const { isVoid } = editor;
   editor.isVoid = (element) => {
-    return ['image'].includes(element.type) || isVoid(element);
+    return VOIDS.includes(element.type) || isVoid(element);
   };
-
-  editor.isInline = (element) => ['link'].includes(element.type);
+  editor.isInline = (element) => element.type === WysiwygStyle.Link;
 
   return { renderElement, renderLeaf };
 }
 
-function renderElement(props: RenderElementProps) {
+function renderElement(props: RenderElementProps, editor: SlateEditor, tags?: string[]) {
   const { children, element, attributes } = props;
   const text = element.children[0].text;
 
+  if (editor.children[0] === element) {
+    return <PostTittle props={props} text={text} tags={tags} viewOnly />;
+  }
+
   switch (element.type) {
     case WysiwygType.Heading:
-      return <PostTittle props={props} text={text} />;
+      return <PostHeading props={props} text={text} viewOnly />;
     case WysiwygType.Code:
-      return (
-        <code {...attributes} contentEditable={false}>
-          <PostCodeEditor element={element} />
-          <span className="hidden">{children}</span>
-        </code>
-      );
+      return <PostCodeEditor {...props} />;
     case WysiwygType.Quote:
       return <PostQuote props={props} text={text} />;
     case WysiwygType.List:
-      return (
-        <li {...attributes} className={`${!text ? 'ph relative' : ''}`}>
-          {children}
-        </li>
-      );
+      return <li {...attributes}>{children}</li>;
     case WysiwygType.ListBullets:
       return (
         <ul {...attributes} className="list-disc px-[18px]">
@@ -54,22 +50,17 @@ function renderElement(props: RenderElementProps) {
           {children}
         </ol>
       );
+    case WysiwygType.ImagePicker:
+      return <React.Fragment/>;
     case WysiwygType.Image:
-      return (
-        <PostImage element={element} viewOnly>
-          {children}
-        </PostImage>
-      );
+      return <PostImage props={props} viewOnly />;
     case WysiwygType.Divider:
-      return <PostDivider>{children}</PostDivider>;
+      return <PostDivider {...props} />;
     case WysiwygStyle.Link:
-      return <PostLink props={props} />;
+      return <PostLink {...props} />;
     default:
       return (
-        <p
-          {...attributes}
-          className={`${!text ? 'ph relative' : ''} ${element.align}`}
-        >
+        <p {...attributes} className={`md:text-lg ${element.align}`}>
           {children}
         </p>
       );
@@ -80,15 +71,12 @@ function renderLeaf({ children, leaf, attributes }: RenderLeafProps) {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
-
   if (leaf.italic) {
     children = <em>{children}</em>;
   }
-
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
-
   if (leaf.strikethrough) {
     children = <s>{children}</s>;
   }

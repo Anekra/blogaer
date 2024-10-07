@@ -2,25 +2,107 @@ import React from 'react';
 import { cn } from '../../utils/shadcn';
 
 export default function LogoIcon({
-  className = 'w-[80px] h-[50px] text-primary-foreground hover:text-secondary-foreground'
+  className = 'h-[50px] w-[80px] text-primary-foreground',
+  isAtTheTop
 }: {
   className?: string | undefined;
+  isAtTheTop?: boolean;
 }) {
   return (
     <svg
+      width="182"
+      height="110"
       viewBox="0 0 182 110"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn('fill-current', className)}
+      className={cn(
+        `fill-current hover:[filter:url(#filter-convex)] active:[filter:url(#filter-inset)]${
+          isAtTheTop
+            ? ' hover:fill-[url(#gradient-p-convex)] active:fill-[rgb(163_95_57)] dark:active:fill-[rgb(238,184,153)]'
+            : ' hover:fill-[url(#gradient-base-convex)] active:fill-[rgb(var(--accent))]'
+        }`,
+        className
+      )}
     >
-      <path d="M162.421 56.5372L182 110H167.167L148.775 59.5407H91.5L74.5 49C134.423 49 157.081 47.5266 157.081 30.7068C157.081 13.2863 146.995 13.2155 87.0718 13.2155L58 0C101.311 1.20141 142.249 -3.00353 160.641 6.00706C172.807 11.9671 179.034 37.9153 162.421 56.5372Z" />
-      <path d="M87.4545 69.5355L92.1818 80.7466H128.64L124.506 69.5355H87.4545Z" />
-      <path d="M43 110H168L163 97C163 98.8676 116.482 98.1717 87.6146 98.1717L43 110Z" />
-      <path d="M138.864 109H153.636L114.045 0.498299H99.2727L124.506 69.5355H127.636L131.773 80.7466H128.64L138.864 109Z" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M0 2.5696e-06C0 2.5696e-06 6.49398 1.64039e-05 53.6697 2.5696e-06C100.845 -1.12647e-05 98.4928 40.4324 67.8244 46.973C118.545 59.4594 99.0826 110 55.4391 110H0C28.3093 110 30.6684 0.135608 0 2.5696e-06ZM35.9764 44.8044C35.4253 27.5746 34.2704 21.1225 31.2892 13.1038C87.3735 7.72071 76.747 44.8044 35.9764 44.8044ZM35.9764 57.081C102.723 57.081 83.3232 101.626 31.2892 101.626C35.9289 84.144 36.4603 74.4055 35.9764 57.081Z"
+        d="M0 0C27 4 29 102 0 109.5H181.5L162 56C177.5 34 177 0 136.5 0H0ZM31 13C79 6 83 42 35 44.5C35.364 32.5777 34.2774 24.5315 31 13ZM35 56C104 56 79 103.5 31 100.5C35.0304 84.1211 36.1534 74.4783 35 56ZM67.5 46.5C85.8672 40.7265 94 24.5 85.5 13H103L116 48.5H74C71.6877 47.4382 70.3568 47.0406 67.5 46.5ZM130 46.5L118 13C118 13 152.317 9.5 155.853 25C160.758 46.5 130 46.5 130 46.5ZM148.5 98L134.5 59H148L161.5 97L148.5 98ZM96 69C95.2555 64.8486 94.2031 62.6514 91 59H120L123.5 69H126.5L130.5 80H127.5L134.5 98H85.5C92.7117 92.4461 95.0814 88.5303 96 80H127.5L123.5 69H96Z"
       />
+      <defs>
+        <linearGradient
+          id="gradient-base-convex"
+          gradientTransform="rotate(45)"
+        >
+          <stop offset="20%" className="logo-base-stop-top" />
+          <stop offset="90%" className="logo-base-stop-mid" />
+          <stop offset="100%" className="logo-base-stop-bot" />
+        </linearGradient>
+        <linearGradient id="gradient-p-convex" gradientTransform="rotate(45)">
+          <stop offset="20%" className="logo-p-stop-top" />
+          <stop offset="90%" className="logo-p-stop-mid" />
+          <stop offset="100%" className="logo-p-stop-bot" />
+        </linearGradient>
+        <filter id="filter-convex" colorInterpolationFilters="sRGB">
+          <feDropShadow
+            dx="-2"
+            dy="-1"
+            stdDeviation="1"
+            className="logo-base-flood-top"
+          />
+          <feDropShadow
+            dx="2"
+            dy="0"
+            stdDeviation="1"
+            className="logo-base-flood-bot"
+          />
+          <feDropShadow
+            dx="0"
+            dy="2"
+            stdDeviation="1"
+            className="logo-base-flood-bot"
+          />
+        </filter>
+        <filter id="filter-inset" fill="rgb(var(--background)/0.5)">
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dx="" dy="2" />
+          <feGaussianBlur stdDeviation="1" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-3" k3="3" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.8 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="shape"
+            result="effect1_innerShadow_246_218"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dx="0" dy="-0.4" />
+          <feGaussianBlur stdDeviation="0.4" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-3" k3="3" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.8 0"
+          />
+          <feBlend mode="normal" in2="effect1_innerShadow_246_218" />
+        </filter>
+      </defs>
     </svg>
   );
 }

@@ -1,5 +1,5 @@
 import { HeadingSize, WysiwygAlign, WysiwygType } from './enums';
-import { CustomElement } from '../slate';
+import { CustomElement } from '../types/slate';
 
 export const AUTH_HEADER = 'authResponse';
 
@@ -24,22 +24,10 @@ export const LIST_TYPES: string[] = [
   WysiwygType.ListNumbers
 ];
 
-export const PATH_TYPES: string[] = [
+export const VOIDS: string[] = [
   WysiwygType.Code,
   WysiwygType.Image,
-  WysiwygType.Divider
-];
-
-export const UNSTYLABLE: string[] = [
-  WysiwygType.Heading,
-  WysiwygType.Code,
-  WysiwygType.Image,
-  WysiwygType.Divider
-];
-
-export const UNALIGNABLE: string[] = [
-  WysiwygType.Code,
-  WysiwygType.Image,
+  WysiwygType.ImagePicker,
   WysiwygType.Divider
 ];
 
@@ -47,9 +35,8 @@ export const INITIAL_VALUE: CustomElement[] = [
   {
     type: WysiwygType.Heading,
     children: [{ text: '' }],
-    path: [0, 0],
     align: WysiwygAlign.Left,
-    headingSize: HeadingSize.H1
+    headingSize: HeadingSize.H
   }
 ];
 

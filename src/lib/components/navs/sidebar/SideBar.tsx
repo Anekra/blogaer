@@ -15,10 +15,11 @@ import { useSession } from '@/lib/contexts/SessionContext';
 export default function SideBar() {
   const currentPath = usePathname();
   const { session } = useSession();
+  const username  = session?.username;
   const { isCollapsed, toggleSideBar } = useSideBar();
 
   return (
-    <aside className="hidden h-screen flex-col items-center gap-2 bg-background px-3 pb-16 pt-[76px] transition-[width] duration-300 md:flex">
+    <aside className="hidden h-full flex-col items-center gap-2 bg-background px-3 pb-16 pt-8 transition-[width] duration-300 md:flex">
       <button
         className="rounded-full p-2 hover:bg-gradient-to-t hover:from-background hover:to-foreground/10"
         onClick={() => toggleSideBar()}
@@ -63,9 +64,9 @@ export default function SideBar() {
             </span>
           </Link>
           <Link
-            href={`/${session?.username}`}
+            href={`/${username}`.toLowerCase()}
             className={`${
-              currentPath === `/${session?.username}`
+              currentPath === `/${username}`
                 ? 'bg-foreground/25 font-bold'
                 : ''
             } ${
@@ -140,9 +141,7 @@ export default function SideBar() {
           <Link
             href="/statistic"
             className={`${
-              currentPath === '/statistic'
-                ? 'bg-foreground/25 font-bold'
-                : ''
+              currentPath === '/statistic' ? 'bg-foreground/25 font-bold' : ''
             } ${
               isCollapsed ? 'flex-col items-center' : 'gap-4'
             } flex justify-center rounded p-2`}

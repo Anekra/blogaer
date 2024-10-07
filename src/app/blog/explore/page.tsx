@@ -1,12 +1,13 @@
-import CategoryTabs from '@/lib/components/filters/CategoryTabs';
-import PostItemsHolderA from '@/lib/components/post/PostItemsHolderA';
+import PostCategoryTabs from '@/lib/components/post/PostCategoryTabs';
+import PostCardsHolderA from '@/lib/components/post/PostCardsHolderA';
 import React from 'react';
 
 export default function ExplorePage() {
   return (
-    <main className="flex w-full max-w-screen-xl flex-col gap-6 px-6 pb-6 pt-20">
-      <CategoryTabs />
-      <PostItemsHolderA />
+    <main className="flex w-full flex-col gap-6 px-6 pb-6 pt-20 xs:px-8 md:px-10 lg:px-12 xl:px-16">
+      <h1 className="mt-6 text-4xl font-bold">Explore</h1>
+      <PostCategoryTabs />
+      <PostCardsHolderA />
     </main>
   );
 }

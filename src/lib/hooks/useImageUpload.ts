@@ -14,7 +14,6 @@ export default function useImageUpload(editor: SlateEditor) {
       if (files?.length === 0) return;
       if (!files) return;
       const file = files[0];
-      const fileName = file.name;
       const base64 = await convertFileToBase64(file);
 
       const img = new Image();
@@ -24,9 +23,7 @@ export default function useImageUpload(editor: SlateEditor) {
         Transforms.setNodes(editor, {
           type: WysiwygType.Image,
           children: [{ text: '' }],
-          imageName: fileName,
-          imageWidth: img.width,
-          imageHeight: img.height,
+          imageName: '',
           imageCaption: '',
           imageBase64: base64
         });

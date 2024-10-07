@@ -18,57 +18,44 @@ const SessionContext = createContext({
 });
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [session, setUserSession] = useState<Session | null>(null);
-  const setSession = (session: Session) => {
-    setUserSession(session);
-  };
+  const [session, setSession] = useState<Session | null>(null);
   const redirectMessage = useSearchParams().get('redirect');
   const { toast } = useToast();
   const sessionName = `${process.env.NEXT_PUBLIC_SESSION}`;
-  useSWR('api/auth/refresh', async (url) => {
+  const { data } = useSWR('/api/auth/refresh?', async (url) => {
     const sessionToken = localStorage.getItem(sessionName);
     if (!sessionToken) return;
     const decodedSession = jwt.decode(sessionToken) as Session;
     if (!decodedSession) return;
-    console.log('refresh token rotation initiated >>>', decodedSession.exp);
-    if (decodedSession.exp > Date.now() / 1000) {
-      setSession(decodedSession);
-      return decodedSession;
-    }
+    if (decodedSession.exp > Date.now() / 1000) return decodedSession;
+
     try {
-      console.log('refresh token rotation initiated >>>', decodedSession.exp);
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: sessionToken
-      });
-      const responseJson = await response.json();
+      const refreshUrl = url + new URLSearchParams({ session: sessionToken });
+      const response = await fetch(refreshUrl);
+      const resJson = await response.json();
       if (!response.ok) {
-        console.log('###SessionContext refresh token failed >>>', responseJson);
         localStorage.removeItem(sessionName);
-        return;
+        return null;
+      } else {
+        localStorage.setItem(sessionName, resJson.session);
+        return decodedSession;
       }
-      localStorage.setItem(sessionName, responseJson.session);
-    } catch (error) {
-      console.error('###refresh token error >>>', error);
-    }
+    } catch (error) {}
   });
 
   useEffect(() => {
-    const sessionToken = localStorage.getItem(sessionName);
-    if (sessionToken) {
-      const decodedSession = jwt.decode(sessionToken) as Session;
-      if (decodedSession) setSession(decodedSession);
-    }
-
     if (redirectMessage) {
+      localStorage.removeItem(sessionName);
+      setSession(null);
       toast({
         title: redirectMessage,
         duration: 3000,
         className: 'toast-base'
       });
     }
-  }, [sessionName, redirectMessage, toast]);
+    if (!data) return;
+    setSession(data);
+  }, [sessionName, redirectMessage, toast, data]);
 
   return (
     <SessionContext.Provider value={{ session, setSession }}>

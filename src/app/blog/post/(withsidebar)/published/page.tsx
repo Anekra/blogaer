@@ -1,10 +1,14 @@
-import PostItemsHolderB from '@/lib/components/post/PostItemsHolderB';
+import PostCardsHolderB from '@/lib/components/post/PostCardsHolderB';
+import { PostsProvider } from '@/lib/contexts/PostsContext';
 import React from 'react';
 
 export default function PublishedPage() {
+  const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/post/user?pageNum=1&pageSize=10`;
   return (
-    <main className="flex justify-center gap-6 px-6 pb-6 pt-24">
-      <PostItemsHolderB />
+    <main className="flex w-full gap-6 px-6 py-8">
+      <PostsProvider>
+        <PostCardsHolderB url={url} />
+      </PostsProvider>
     </main>
   );
 }

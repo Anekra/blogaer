@@ -28,7 +28,7 @@ export default function GlobalLayout({
           <SessionProvider>
             <NextThemesProvider>
               <NextTopLoader
-                color="hsl(var(--secondary-foreground))"
+                color="rgb(var(--primary-foreground))"
                 showSpinner={false}
               />
               <LoadingProvider>

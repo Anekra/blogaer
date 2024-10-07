@@ -10,13 +10,15 @@ export default async function PostWithSBLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative flex min-h-screen">
+    <React.Fragment>
       <Navbar />
-      <SideBarProvider>
-        <SideBar />
-      </SideBarProvider>
-      {children}
+      <div className="flex min-h-screen w-screen max-w-screen-2xl">
+        <SideBarProvider>
+          <SideBar />
+        </SideBarProvider>
+        {children}
+      </div>
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }
